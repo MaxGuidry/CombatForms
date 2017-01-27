@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-
+using CombatForms.Classes;
 namespace CombatForms
 {
     public partial class Form1 : Form
@@ -15,6 +15,7 @@ namespace CombatForms
         public Form1()
         {
             InitializeComponent();
+            
         }
     }
 }
