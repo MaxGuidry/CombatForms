@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace CombatForms.Classes
 {
-    class State
+   public class State
     {
         public State(Enum e)
         {

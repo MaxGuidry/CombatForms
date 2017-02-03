@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+//using CombatForms.Iterfaces;
 namespace CombatForms.Classes
 {
-    class FSM<T>
+    
+    public class FSM<T>
     {
         public FSM()
         {
@@ -163,8 +164,14 @@ namespace CombatForms.Classes
         {
 
         }
+
+      
+
+       
         private Dictionary<string, List<State>> transitions;
+     
         private State currentState;
+        
         private Dictionary<string, State> states;
     }
 }
