@@ -31,7 +31,7 @@ namespace CombatForms
         public Form1()
         {
             InitializeComponent();
-            combatFSM.AddTransition(new FSM<Player>, CombatState.PLAYER2);
+           // combatFSM.AddTransition(new FSM<Player>, CombatState.PLAYER2);
             combatFSM.AddTransition(CombatState.PLAYER2, CombatState.PLAYER1);
 
         }
