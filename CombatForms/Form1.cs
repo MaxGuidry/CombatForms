@@ -13,34 +13,24 @@ namespace CombatForms
 {
     public partial class Form1 : Form
     {
-        enum PlayerState
-        {
-            INIT,
-            WAIT,
-            ATTACK,
-            DEFEND,
-        }
 
-        enum CombatState
-        {
-            PLAYER1,
-            PLAYER2,
-        }
-        FSM<CombatState> combatFSM = new FSM<CombatState>();
-
+        Player me;
+        Player you;
+        public Combat test;
         public Form1()
         {
             InitializeComponent();
-           // combatFSM.AddTransition(new FSM<Player>, CombatState.PLAYER2);
-            combatFSM.AddTransition(CombatState.PLAYER2, CombatState.PLAYER1);
+            test = new Combat();
+            me = new Player();
+            you = new Player();
 
         }
 
         private void Form1_Load(object sender, EventArgs e)
         {
             
-            combatFSM.Start(CombatState.PLAYER1);
-           
+
+
         }
 
         private void PlayerHealth_Click(object sender, EventArgs e)
@@ -56,7 +46,7 @@ namespace CombatForms
         }
         private void Attack_Click(object sender, EventArgs e)
         {
-
+            test.
         }
         private void Defend_Click(object sender, EventArgs e)
         {
@@ -65,7 +55,7 @@ namespace CombatForms
 
         private void EndTurn_Click(object sender, EventArgs e)
         {
-            
+
         }
     }
 }

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace CombatForms.Iterfaces
 {
-    interface IDamagable
+    public interface IDamagable
     {
         void TakeDamage(float Amount);
     }

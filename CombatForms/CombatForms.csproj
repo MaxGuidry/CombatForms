@@ -47,6 +47,7 @@
     <Reference Include="System.Xml.Serialization" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Classes\Combat.cs" />
     <Compile Include="Classes\DataManager.cs" />
     <Compile Include="Classes\FSM.cs" />
     <Compile Include="Classes\Player.cs" />
