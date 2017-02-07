@@ -46,7 +46,7 @@ namespace CombatForms
         }
         private void Attack_Click(object sender, EventArgs e)
         {
-            test.
+            
         }
         private void Defend_Click(object sender, EventArgs e)
         {

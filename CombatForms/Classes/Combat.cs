@@ -9,7 +9,9 @@ namespace CombatForms.Classes
     public class Combat
     {
 
-
+        //Not sure whether to do this with the fsm or just a list of players since there is just the Player against enemies that level as you kill them
+        //THIS IS THE FSM WAY?????
+        /*
         public Combat()
         {
             currentPlayer = CombatStates.PLAYER1;
@@ -29,18 +31,35 @@ namespace CombatForms.Classes
         {
             combatControl.ChangeState(state);
         }
-        private List<Player> entities;
-
+           
         private enum CombatStates
         {
             PLAYER1,
             ENEMY,
         }
+        CombatStates currentPlayer;
+        private FSM<CombatStates> combatControl;
+        */
+
+        public Combat()
+        {
+
+        }
+        public void NextPlayer()
+        {
+            
+        }
         public void AddPlayer(Player p)
         {
             entities.Add(p);
+            p.onDeath = OnPlayerDeath;
+           
         }
-        CombatStates currentPlayer;
-        private FSM<CombatStates> combatControl;
+        private void OnPlayerDeath()
+        {
+            entities.Remove(currentPlayer);
+        }
+        private List<Player> entities;
+        public Player currentPlayer;
     }
 }
