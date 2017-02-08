@@ -43,22 +43,52 @@ namespace CombatForms.Classes
 
         public Combat()
         {
-
+            entities = new List<Player>();
         }
         public void NextPlayer()
         {
-            
+            if (currentPlayerID == 0)
+            {
+                currentPlayer = entities[1];
+                currentPlayerID = 1;
+                return;
+            }
+            currentPlayer = entities[0];
+            currentPlayerID = 0;
         }
         public void AddPlayer(Player p)
         {
             entities.Add(p);
             p.onDeath = OnPlayerDeath;
-           
+
+        }
+        public void GenerateNewEnemy()
+        {
+
+        }
+        public Player GetTarget()
+        {
+            if (currentPlayerID == 0)
+                return entities[1];
+
+            return entities[0];
+
         }
         private void OnPlayerDeath()
         {
             entities.Remove(currentPlayer);
+
         }
+        public void Start()
+        {
+            currentPlayer = entities[0];
+        }
+        public void Update()
+        {
+            if (currentPlayer.CurrentState().ToString() == "ATTACK")
+                currentPlayer.DealDamage(GetTarget(), currentPlayer.AD);
+        }
+        private int currentPlayerID;
         private List<Player> entities;
         public Player currentPlayer;
     }

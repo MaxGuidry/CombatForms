@@ -21,15 +21,16 @@ namespace CombatForms
         {
             InitializeComponent();
             test = new Combat();
-            me = new Player();
-            you = new Player();
+            me = new Player(598f,1,30f);
+            you = new Player(2f,1,20f);
+            test.AddPlayer(me);
+            test.AddPlayer(you);
+            test.Start();
 
         }
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            
-
 
         }
 
@@ -39,23 +40,26 @@ namespace CombatForms
         }
 
 
-
         private void EnemyHealth_Click(object sender, EventArgs e)
         {
 
         }
         private void Attack_Click(object sender, EventArgs e)
         {
-            
+            test.currentPlayer.ChangePlayerState("ATTACK");
+           
         }
         private void Defend_Click(object sender, EventArgs e)
         {
+            test.currentPlayer.ChangePlayerState("DEFEND");
 
         }
 
         private void EndTurn_Click(object sender, EventArgs e)
         {
-
+            test.Update();
+            test.currentPlayer.ChangePlayerState("WAIT");
+            test.NextPlayer();
         }
     }
 }

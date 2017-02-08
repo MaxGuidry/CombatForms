@@ -47,27 +47,27 @@
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(150, 60);
             this.button1.TabIndex = 0;
-            this.button1.Text = "button1";
+            this.button1.Text = "Attack";
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.Attack_Click);
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(1215, 549);
+            this.button2.Location = new System.Drawing.Point(736, 549);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(150, 60);
             this.button2.TabIndex = 1;
-            this.button2.Text = "button2";
+            this.button2.Text = "Defend";
             this.button2.UseVisualStyleBackColor = true;
             this.button2.Click += new System.EventHandler(this.Defend_Click);
             // 
             // button3
             // 
-            this.button3.Location = new System.Drawing.Point(689, 549);
+            this.button3.Location = new System.Drawing.Point(1308, 549);
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(150, 60);
             this.button3.TabIndex = 2;
-            this.button3.Text = "button3";
+            this.button3.Text = "End Turn";
             this.button3.UseVisualStyleBackColor = true;
             this.button3.Click += new System.EventHandler(this.EndTurn_Click);
             // 
@@ -88,7 +88,7 @@
             // 
             // EnemyHealth
             // 
-            this.EnemyHealth.Location = new System.Drawing.Point(1265, 357);
+            this.EnemyHealth.Location = new System.Drawing.Point(1358, 357);
             this.EnemyHealth.Name = "EnemyHealth";
             this.EnemyHealth.Size = new System.Drawing.Size(100, 23);
             this.EnemyHealth.TabIndex = 5;
@@ -96,7 +96,7 @@
             // 
             // EnemyStamina
             // 
-            this.EnemyStamina.Location = new System.Drawing.Point(1265, 418);
+            this.EnemyStamina.Location = new System.Drawing.Point(1358, 418);
             this.EnemyStamina.Name = "EnemyStamina";
             this.EnemyStamina.Size = new System.Drawing.Size(100, 23);
             this.EnemyStamina.TabIndex = 6;
@@ -119,7 +119,7 @@
             // 
             // textBox3
             // 
-            this.textBox3.Location = new System.Drawing.Point(1265, 331);
+            this.textBox3.Location = new System.Drawing.Point(1358, 331);
             this.textBox3.Name = "textBox3";
             this.textBox3.Size = new System.Drawing.Size(100, 20);
             this.textBox3.TabIndex = 9;
@@ -127,7 +127,7 @@
             // 
             // textBox4
             // 
-            this.textBox4.Location = new System.Drawing.Point(1265, 392);
+            this.textBox4.Location = new System.Drawing.Point(1358, 392);
             this.textBox4.Name = "textBox4";
             this.textBox4.Size = new System.Drawing.Size(100, 20);
             this.textBox4.TabIndex = 10;

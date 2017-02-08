@@ -40,6 +40,10 @@ namespace CombatForms.Classes
             return true;
            
         }
+        public override string ToString()
+        {
+            return m_Name;
+        }
         public Handler onUpdate;
         public delegate void Handler();
         public Handler onStart;
