@@ -14,24 +14,20 @@ namespace CombatForms
     public partial class Form1 : Form
     {
 
-        Player me;
-        Player you;
-        public Combat test;
+       
+       
         public Form1()
         {
             InitializeComponent();
-            test = new Combat();
-            me = new Player(50f,1,30f,10f);
-            you = new Player(30f,1,20f,5f);
-            test.AddPlayer(ref me);
-            test.AddPlayer(ref you);
-            test.Start();
+
+            Combat.Instance.Start();
 
         }
 
         private void Form1_Load(object sender, EventArgs e)
         {
-
+            richTextBox1.Text = "Current Level: " + Combat.Instance.user.Level + '\n' + "Attack: " + Combat.Instance.user.AD + '\n' + "Speed: " + Combat.Instance.user.Speed;
+            richTextBox2.Text = "Current Level: " + Combat.Instance.enemy.Level + '\n' + "Attack: " + Combat.Instance.enemy.AD + '\n' + "Speed: " + Combat.Instance.enemy.Speed;
         }
 
         private void PlayerHealth_Click(object sender, EventArgs e)
@@ -46,20 +42,24 @@ namespace CombatForms
         }
         private void Attack_Click(object sender, EventArgs e)
         {
-            test.currentPlayer.ChangePlayerState("ATTACK");
-           
+            Combat.Instance.user.ChangePlayerState("ATTACK");
+
         }
         private void Defend_Click(object sender, EventArgs e)
         {
-            test.currentPlayer.ChangePlayerState("DEFEND");
+            Combat.Instance.user.ChangePlayerState("DEFEND");
         }
 
         private void EndTurn_Click(object sender, EventArgs e)
         {
-            test.Update();
-            test.currentPlayer.ChangePlayerState("WAIT");
-            test.NextPlayer();
-            richTextBox1.Text = "Current Level: " + me.Level;
+            Combat.Instance.Update();
+            Combat.Instance.user.ChangePlayerState("WAIT");
+            Combat.Instance.NextPlayer();
+            richTextBox1.Text = "Current Level: " + Combat.Instance.user.Level;
+            richTextBox1.Text = "Current Level: " + Combat.Instance.user.Level + '\n' + "Attack: " + Combat.Instance.user.AD + '\n' + "Speed: " + Combat.Instance.user.Speed;
+            richTextBox2.Text = "Current Level: " + Combat.Instance.enemy.Level + '\n' + "Attack: " + Combat.Instance.enemy.AD + '\n' + "Speed: " + Combat.Instance.enemy.Speed;
+            Combat.Instance.currentPlayer.onDeath.Invoke();
+
         }
     }
 }

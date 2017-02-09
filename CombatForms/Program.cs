@@ -14,9 +14,12 @@ namespace CombatForms
         [STAThread]
         static void Main()
         {
-            //Player me;
-            //Player you;
-            //Combat test;
+            Player me=new Player(50f,1,30,10);
+            Enemy you = new Enemy(40, 1, 20, 5);
+           
+            Combat.Instance.AddPlayer(me);
+            Combat.Instance.AddPlayer(you);
+            Combat.Instance.currentPlayer = me;
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new Form1());

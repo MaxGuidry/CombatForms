@@ -3,103 +3,80 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using CombatForms.Iterfaces;
 namespace CombatForms.Classes
 {
     public class Combat
     {
 
-        //Not sure whether to do this with the fsm or just a list of players since there is just the Player against enemies that level as you kill them
-        //THIS IS THE FSM WAY?????
-        /*
-        public Combat()
-        {
-            currentPlayer = CombatStates.PLAYER1;
-            combatControl.AddTransition(CombatStates.PLAYER1, CombatStates.ENEMY);
-            combatControl.AddTransition( CombatStates.ENEMY,CombatStates.PLAYER1);
-        }
 
-        public void ChangePlayers()
+        private static Combat instance;
+        private Combat()
         {
-            if (currentPlayer == CombatStates.PLAYER1)
-                combatControl.ChangeState(CombatStates.ENEMY);
-            else if (currentPlayer == CombatStates.ENEMY)
-                combatControl.ChangeState(CombatStates.PLAYER1);
+            entities = new List<Entity>();
+        }
+        public static Combat Instance
+        {
+            get
+            {
+                if (instance == null)
+                    instance = new Combat();
+                return instance;
+            }
 
         }
-        public void ChangeCombatState<T>(T state)
-        {
-            combatControl.ChangeState(state);
-        }
-           
-        private enum CombatStates
-        {
-            PLAYER1,
-            ENEMY,
-        }
-        CombatStates currentPlayer;
-        private FSM<CombatStates> combatControl;
-        */
 
-        public Combat()
-        {
-            entities = new List<Player>();
-        }
         public void NextPlayer()
         {
-            if (currentPlayerID == 0)
-            {
-                currentPlayer = entities[1];
-                currentPlayerID = 1;
-                return;
-            }
-            currentPlayer = entities[0];
-            currentPlayerID = 0;
+           
+
         }
-        public void AddPlayer(ref Player p)
+        public void AddPlayer( Entity e)
         {
-            entities.Add(p);
-            p.onDeath = OnPlayerDeath;
+            e.onDeath += OnPlayerDeath;
+            entities.Add(e);
 
         }
         public void GenerateNewEnemy(int level)
         {
             Random r = new Random();
 
-            Player p = new Player();
-            Player ne = new Player((float)Math.Pow((double)p.Health, r.NextDouble() * (1.3d - 1d) + 1d),
+            Enemy e = new Enemy();
+            Enemy ne = new Enemy((float)Math.Pow((double)e.Health, r.NextDouble() * (1.3d - 1d) + 1d),
                    level,
-                  (float)Math.Pow((double)p.Damage,
+                  (float)Math.Pow((double)e.Damage,
                   r.NextDouble() * (1.3d - 1d) + 1d),
-                  (float)Math.Pow(p.Speed, r.NextDouble() * (1.3d - 1d) + 1d));
-            AddPlayer(ref ne);
+                  (float)Math.Pow(e.Speed, r.NextDouble() * (1.3d - 1d) + 1d));
+            entities.Add(ne);
         }
-        public Player GetTarget()
-        {
-            if (currentPlayerID == 0)
-                return entities[1];
 
-            return entities[0];
-
-        }
         private void OnPlayerDeath()
         {
-            GetTarget().Alive = false;
-            int tmplv = GetTarget().Level + 1;
-            entities.Remove(GetTarget());
+           
+                
+            if(typeof(Player).ToString()==currentPlayer.ToString())
+            {
+                currentPlayer.onDeath.Invoke();
+                return;
+            }
+
+            int tmplv = (currentPlayer as Enemy).Level + 1;
             GenerateNewEnemy(tmplv);
         }
         public void Start()
         {
-            currentPlayer = entities[0];
+            
+            
         }
         public void Update()
         {
             if (currentPlayer.CurrentState().ToString() == "ATTACK")
-                currentPlayer.DealDamage(GetTarget(), currentPlayer.AD);
+                currentPlayer.DealDamage(target, currentPlayer.Damage);
         }
-        private int currentPlayerID;
-        private List<Player> entities;
-        public Player currentPlayer;
+        public Entity target;
+        public List<Entity> entities;
+        public Entity currentPlayer;
+
+
     }
 }
