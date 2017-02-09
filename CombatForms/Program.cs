@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-
+using CombatForms.Classes;
 namespace CombatForms
 {
     static class Program
@@ -14,6 +14,9 @@ namespace CombatForms
         [STAThread]
         static void Main()
         {
+            //Player me;
+            //Player you;
+            //Combat test;
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new Form1());
