@@ -56,15 +56,23 @@ namespace CombatForms.Classes
             currentPlayer = entities[0];
             currentPlayerID = 0;
         }
-        public void AddPlayer(Player p)
+        public void AddPlayer(ref Player p)
         {
             entities.Add(p);
             p.onDeath = OnPlayerDeath;
 
         }
-        public void GenerateNewEnemy()
+        public void GenerateNewEnemy(int level)
         {
+            Random r = new Random();
 
+            Player p = new Player();
+            Player ne = new Player((float)Math.Pow((double)p.Health, r.NextDouble() * (1.3d - 1d) + 1d),
+                   level,
+                  (float)Math.Pow((double)p.Damage,
+                  r.NextDouble() * (1.3d - 1d) + 1d),
+                  (float)Math.Pow(p.Speed, r.NextDouble() * (1.3d - 1d) + 1d));
+            AddPlayer(ref ne);
         }
         public Player GetTarget()
         {
@@ -76,8 +84,10 @@ namespace CombatForms.Classes
         }
         private void OnPlayerDeath()
         {
-            entities.Remove(currentPlayer);
-
+            GetTarget().Alive = false;
+            int tmplv = GetTarget().Level + 1;
+            entities.Remove(GetTarget());
+            GenerateNewEnemy(tmplv);
         }
         public void Start()
         {

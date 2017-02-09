@@ -21,10 +21,10 @@ namespace CombatForms
         {
             InitializeComponent();
             test = new Combat();
-            me = new Player(598f,1,30f);
-            you = new Player(2f,1,20f);
-            test.AddPlayer(me);
-            test.AddPlayer(you);
+            me = new Player(50f,1,30f,10f);
+            you = new Player(30f,1,20f,5f);
+            test.AddPlayer(ref me);
+            test.AddPlayer(ref you);
             test.Start();
 
         }
@@ -52,7 +52,6 @@ namespace CombatForms
         private void Defend_Click(object sender, EventArgs e)
         {
             test.currentPlayer.ChangePlayerState("DEFEND");
-
         }
 
         private void EndTurn_Click(object sender, EventArgs e)
@@ -60,6 +59,7 @@ namespace CombatForms
             test.Update();
             test.currentPlayer.ChangePlayerState("WAIT");
             test.NextPlayer();
+            richTextBox1.Text = "Current Level: " + me.Level;
         }
     }
 }
