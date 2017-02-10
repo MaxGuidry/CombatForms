@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 using CombatForms.Iterfaces;
 namespace CombatForms.Classes
 {
@@ -33,6 +34,12 @@ namespace CombatForms.Classes
             if (currentPlayer.NumberOfTurns <= currentPlayer.TurnsTaken)
             {
                 currentIndex++;
+                if (currentIndex >= entities.Count)
+                {
+
+                    currentIndex = 0;
+                    return;
+                }
                 currentPlayer = entities[currentIndex];
             }
         }
@@ -43,6 +50,8 @@ namespace CombatForms.Classes
                 e.onDeath = OnPlayerDeath;
 
                 entities.Add(e);
+                SortEntities();
+                return;
             }
             e.onDeath += OnPlayerDeath;
             entities.Add(e);
@@ -52,7 +61,7 @@ namespace CombatForms.Classes
         {
             Random r = new Random();
             Enemy e = new Enemy();
-            Enemy ne = new Enemy((float)Math.Pow((double)e.Health, r.NextDouble() * (1.3d - 1d) + 1d),
+            Enemy ne = new Enemy(currentPlayer.Name + " Level:" + level, (float)Math.Pow((double)e.Health, r.NextDouble() * (1.3d - 1d) + 1d),
                    level,
                   (float)Math.Pow((double)e.Damage,
                   r.NextDouble() * (1.3d - 1d) + 1d),
@@ -62,14 +71,11 @@ namespace CombatForms.Classes
 
         private void OnPlayerDeath()
         {
-
-
             if (typeof(Player).ToString() == currentPlayer.ToString())
             {
                 currentPlayer.onDeath.Invoke();
                 return;
             }
-
             int tmplv = (currentPlayer as Enemy).Level + 1;
             GenerateNewEnemy(tmplv);
         }
@@ -89,6 +95,51 @@ namespace CombatForms.Classes
                 currentPlayer.DealDamage(target, currentPlayer.Damage);
 
             currentPlayer.TurnsTaken++;
+        }
+        public List<Control> CreateButtons()
+        {
+            int i = 1;
+            int j = 1;
+            List<Control> tmp = new List<Control>();
+            foreach (Entity e in entities)
+            {
+
+                currentPlayer.PlayerButton = new Button();
+                if (typeof(Player).ToString() == currentPlayer.ToString())
+                {
+
+                    currentPlayer.PlayerButton.Location = new System.Drawing.Point(110, 150 * i);
+                    currentPlayer.PlayerButton.Text = currentPlayer.Name;
+
+                    i++;
+                }
+
+                if (typeof(Enemy).ToString() == currentPlayer.ToString())
+                {
+
+                    currentPlayer.PlayerButton.Location = new System.Drawing.Point(690, 150 * j);
+                    currentPlayer.PlayerButton.Text = currentPlayer.Name;
+
+                    j++;
+                }
+                currentPlayer.PlayerButton.Size = new System.Drawing.Size(150, 50);
+                currentPlayer.PlayerButton.Click += GetTarget;
+                tmp.Add(currentPlayer.PlayerButton);
+                NextPlayer();
+            }
+            return tmp;
+        }
+        private void GetTarget(object sender, EventArgs e)
+        {
+
+            foreach (Entity E in entities)
+            {
+                if (E.Name == (sender as Control).Text && currentPlayer.ToString() == E.ToString())
+                {
+                    target = E;
+                    return;
+                }
+            }
         }
         public Entity target;
         public List<Entity> entities;

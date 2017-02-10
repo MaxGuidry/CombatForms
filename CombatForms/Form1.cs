@@ -20,8 +20,11 @@ namespace CombatForms
         {
             InitializeComponent();
 
+            foreach(Control c in Combat.Instance.CreateButtons())
+            {
+                this.Controls.Add(c);
+            }
             Combat.Instance.Start();
-
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -43,7 +46,7 @@ namespace CombatForms
         private void Attack_Click(object sender, EventArgs e)
         {
             Combat.Instance.currentPlayer.ChangePlayerState("ATTACK");
-
+            
         }
         private void Defend_Click(object sender, EventArgs e)
         {
@@ -55,11 +58,42 @@ namespace CombatForms
 
             Combat.Instance.Update();
             // Combat.Instance.user.ChangePlayerState("WAIT");
+           
             Combat.Instance.NextPlayer();
             // richTextBox1.Text = "Current Level: " + Combat.Instance.user.Level;
             // richTextBox1.Text = "Current Level: " + Combat.Instance.user.Level + '\n' + "Attack: " + Combat.Instance.user.AD + '\n' + "Speed: " + Combat.Instance.user.Speed;
             //richTextBox2.Text = "Current Level: " + Combat.Instance.enemy.Level + '\n' + "Attack: " + Combat.Instance.enemy.AD + '\n' + "Speed: " + Combat.Instance.enemy.Speed;
 
+
+        }
+
+        private void richTextBox2_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void richTextBox3_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void richTextBox4_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void richTextBox1_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void richTextBox5_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void richTextBox6_TextChanged(object sender, EventArgs e)
+        {
 
         }
     }

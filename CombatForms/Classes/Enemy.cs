@@ -21,14 +21,14 @@ namespace CombatForms.Classes
             m_Speed = 5f;
         }
 
-        public Enemy(float health, int level, float baseDamage, float speed)
+        public Enemy(string name,float health, int level, float baseDamage, float speed)
         {
 
 
             m_Alive = true;
             m_Level = level;
             m_Health = health;
-
+            m_Name = name;
             m_Speed = speed;
         }
         public override void DealDamage(IDamagable target, float Amount)

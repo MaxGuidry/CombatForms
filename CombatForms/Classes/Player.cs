@@ -24,11 +24,11 @@ namespace CombatForms.Classes
 
         }
 
-        public Player(float health, int level, float baseDamage, float speed)
+        public Player(string name,float health, int level, float baseDamage, float speed)
         {
 
             m_ExpToNextLevel = 100f;
-
+            m_Name = name;
             m_Alive = true;
             m_Level = level;
             m_Health = health;

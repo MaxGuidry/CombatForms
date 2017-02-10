@@ -32,16 +32,12 @@
             this.button2 = new System.Windows.Forms.Button();
             this.button3 = new System.Windows.Forms.Button();
             this.PlayerHealth = new System.Windows.Forms.ProgressBar();
-            this.EnemyHealth = new System.Windows.Forms.ProgressBar();
             this.textBox1 = new System.Windows.Forms.TextBox();
-            this.textBox3 = new System.Windows.Forms.TextBox();
-            this.richTextBox1 = new System.Windows.Forms.RichTextBox();
-            this.richTextBox2 = new System.Windows.Forms.RichTextBox();
             this.SuspendLayout();
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(113, 549);
+            this.button1.Location = new System.Drawing.Point(113, 669);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(150, 60);
             this.button1.TabIndex = 0;
@@ -51,7 +47,7 @@
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(736, 549);
+            this.button2.Location = new System.Drawing.Point(416, 669);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(150, 60);
             this.button2.TabIndex = 1;
@@ -61,7 +57,7 @@
             // 
             // button3
             // 
-            this.button3.Location = new System.Drawing.Point(1308, 549);
+            this.button3.Location = new System.Drawing.Point(689, 669);
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(150, 60);
             this.button3.TabIndex = 2;
@@ -71,62 +67,29 @@
             // 
             // PlayerHealth
             // 
-            this.PlayerHealth.Location = new System.Drawing.Point(113, 357);
+            this.PlayerHealth.Location = new System.Drawing.Point(416, 509);
             this.PlayerHealth.Name = "PlayerHealth";
-            this.PlayerHealth.Size = new System.Drawing.Size(100, 23);
+            this.PlayerHealth.Size = new System.Drawing.Size(150, 36);
             this.PlayerHealth.TabIndex = 3;
             this.PlayerHealth.Click += new System.EventHandler(this.PlayerHealth_Click);
             // 
-            // EnemyHealth
-            // 
-            this.EnemyHealth.Location = new System.Drawing.Point(1358, 357);
-            this.EnemyHealth.Name = "EnemyHealth";
-            this.EnemyHealth.Size = new System.Drawing.Size(100, 23);
-            this.EnemyHealth.TabIndex = 5;
-            this.EnemyHealth.Click += new System.EventHandler(this.EnemyHealth_Click);
-            // 
             // textBox1
             // 
-            this.textBox1.Location = new System.Drawing.Point(113, 331);
+            this.textBox1.BackColor = System.Drawing.SystemColors.Menu;
+            this.textBox1.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.textBox1.ForeColor = System.Drawing.SystemColors.MenuText;
+            this.textBox1.Location = new System.Drawing.Point(474, 490);
             this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(100, 20);
+            this.textBox1.Size = new System.Drawing.Size(37, 13);
             this.textBox1.TabIndex = 7;
             this.textBox1.Text = "Health";
-            // 
-            // textBox3
-            // 
-            this.textBox3.Location = new System.Drawing.Point(1358, 331);
-            this.textBox3.Name = "textBox3";
-            this.textBox3.Size = new System.Drawing.Size(100, 20);
-            this.textBox3.TabIndex = 9;
-            this.textBox3.Text = "Health";
-            // 
-            // richTextBox1
-            // 
-            this.richTextBox1.Location = new System.Drawing.Point(113, 170);
-            this.richTextBox1.Name = "richTextBox1";
-            this.richTextBox1.Size = new System.Drawing.Size(179, 155);
-            this.richTextBox1.TabIndex = 11;
-            this.richTextBox1.Text = "";
-            // 
-            // richTextBox2
-            // 
-            this.richTextBox2.Location = new System.Drawing.Point(1279, 170);
-            this.richTextBox2.Name = "richTextBox2";
-            this.richTextBox2.Size = new System.Drawing.Size(179, 155);
-            this.richTextBox2.TabIndex = 12;
-            this.richTextBox2.Text = "";
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1607, 817);
-            this.Controls.Add(this.richTextBox2);
-            this.Controls.Add(this.richTextBox1);
-            this.Controls.Add(this.textBox3);
+            this.ClientSize = new System.Drawing.Size(970, 755);
             this.Controls.Add(this.textBox1);
-            this.Controls.Add(this.EnemyHealth);
             this.Controls.Add(this.PlayerHealth);
             this.Controls.Add(this.button3);
             this.Controls.Add(this.button2);
@@ -145,11 +108,7 @@
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.Button button3;
         private System.Windows.Forms.ProgressBar PlayerHealth;
-        private System.Windows.Forms.ProgressBar EnemyHealth;
         private System.Windows.Forms.TextBox textBox1;
-        private System.Windows.Forms.TextBox textBox3;
-        private System.Windows.Forms.RichTextBox richTextBox1;
-        private System.Windows.Forms.RichTextBox richTextBox2;
     }
 }
 
