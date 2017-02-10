@@ -42,6 +42,7 @@ namespace CombatForms.Classes
                 }
                 currentPlayer = entities[currentIndex];
             }
+            target = null;
         }
         public void AddPlayer(Entity e)
         {
@@ -93,7 +94,7 @@ namespace CombatForms.Classes
         {
             if (currentPlayer.CurrentState().ToString() == "ATTACK")
                 currentPlayer.DealDamage(target, currentPlayer.Damage);
-
+            NextPlayer();
             currentPlayer.TurnsTaken++;
         }
         public List<Control> CreateButtons()
@@ -124,6 +125,7 @@ namespace CombatForms.Classes
                 }
                 currentPlayer.PlayerButton.Size = new System.Drawing.Size(150, 50);
                 currentPlayer.PlayerButton.Click += GetTarget;
+               
                 tmp.Add(currentPlayer.PlayerButton);
                 NextPlayer();
             }
@@ -134,12 +136,14 @@ namespace CombatForms.Classes
 
             foreach (Entity E in entities)
             {
-                if (E.Name == (sender as Control).Text && currentPlayer.ToString() == E.ToString())
+                if (E.Name == (sender as Control).Text && !(currentPlayer.ToString() == E.ToString()))
                 {
                     target = E;
+                   
                     return;
                 }
             }
+
         }
         public Entity target;
         public List<Entity> entities;

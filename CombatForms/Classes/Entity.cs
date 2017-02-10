@@ -64,6 +64,7 @@ namespace CombatForms.Classes
         protected int m_NumberOfTurns;
         protected int m_TurnsTaken;
         protected string m_Name;
+        protected bool m_Alive;
         protected System.Windows.Forms.Control m_Button;
         public float Damage { get { return m_Damage; } set { m_Damage = value; } }
         public float Health { get { return m_Health; } set { m_Health = value; } }
@@ -73,5 +74,6 @@ namespace CombatForms.Classes
         public int TurnsTaken { get { return m_TurnsTaken; } set { m_TurnsTaken = value; } }
         public string Name { get { return m_Name; } set { m_Name = value; } }
         public System.Windows.Forms.Control PlayerButton { get { return m_Button; }set { m_Button = value; } }
+        public bool Alive { get { return m_Alive; } set { m_Alive = value; } }
     }
 }

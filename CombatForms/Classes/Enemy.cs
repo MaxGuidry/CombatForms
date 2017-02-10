@@ -34,7 +34,7 @@ namespace CombatForms.Classes
         public override void DealDamage(IDamagable target, float Amount)
         {
             target.TakeDamage(Amount);
-            if (!(target as Player).Alive)
+            if (!(target as Entity).Alive)
                 (target as Player).GainEXP(target);
         }
 
@@ -64,12 +64,11 @@ namespace CombatForms.Classes
         //FIELDS AND PROPERTIES
         #region FIELDS AND PROPERTIES
         private int m_Level;
-        private bool m_Alive;
+        
         private float m_MaxHealth;
         
         public int Level { get { return m_Level; } set { m_Level = value; } }
-        public bool Alive { get { return m_Alive; } set { m_Alive = value; } }
-
+      
         public float MaxHealth { get { return m_MaxHealth; } set { m_MaxHealth = value; } }
 
 

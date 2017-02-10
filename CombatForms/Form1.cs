@@ -59,7 +59,7 @@ namespace CombatForms
             Combat.Instance.Update();
             // Combat.Instance.user.ChangePlayerState("WAIT");
            
-            Combat.Instance.NextPlayer();
+           // Combat.Instance.NextPlayer();
             // richTextBox1.Text = "Current Level: " + Combat.Instance.user.Level;
             // richTextBox1.Text = "Current Level: " + Combat.Instance.user.Level + '\n' + "Attack: " + Combat.Instance.user.AD + '\n' + "Speed: " + Combat.Instance.user.Speed;
             //richTextBox2.Text = "Current Level: " + Combat.Instance.enemy.Level + '\n' + "Attack: " + Combat.Instance.enemy.AD + '\n' + "Speed: " + Combat.Instance.enemy.Speed;
@@ -67,34 +67,6 @@ namespace CombatForms
 
         }
 
-        private void richTextBox2_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void richTextBox3_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void richTextBox4_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void richTextBox1_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void richTextBox5_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void richTextBox6_TextChanged(object sender, EventArgs e)
-        {
-
-        }
+       
     }
 }

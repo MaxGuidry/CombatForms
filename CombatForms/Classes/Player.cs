@@ -83,15 +83,14 @@ namespace CombatForms.Classes
         private float m_Exp;
         private float m_ExpToNextLevel;
         private int m_Level;
-        private bool m_Alive;
+     
         private float m_MaxHealth;
 
 
 
         public float EXP { get { return m_Exp; } set { m_Exp = value; } }
         public int Level { get { return m_Level; } set { m_Level = value; } }
-        public bool Alive { get { return m_Alive; } set { m_Alive = value; } }
-
+       
         public float MaxHealth { get { return m_MaxHealth; } set { m_MaxHealth = value; } }
 
 
