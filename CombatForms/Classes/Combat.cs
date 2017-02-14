@@ -38,7 +38,7 @@ namespace CombatForms.Classes
                 {
 
                     currentIndex = 0;
-                    return;
+                    
                 }
                 currentPlayer = entities[currentIndex];
             }
@@ -68,16 +68,19 @@ namespace CombatForms.Classes
                   r.NextDouble() * (1.3d - 1d) + 1d),
                   (float)Math.Pow(e.Speed, r.NextDouble() * (1.3d - 1d) + 1d));
             entities.Add(ne);
+            SortEntities();
         }
 
         private void OnPlayerDeath()
         {
             if (typeof(Player).ToString() == currentPlayer.ToString())
             {
-                currentPlayer.onDeath.Invoke();
+                entities.Remove(currentPlayer);
                 return;
             }
+
             int tmplv = (currentPlayer as Enemy).Level + 1;
+            entities.Remove(currentPlayer);
             GenerateNewEnemy(tmplv);
         }
         public void Start()
@@ -90,14 +93,24 @@ namespace CombatForms.Classes
         {
             entities.Sort((x, y) => -1 * x.Speed.CompareTo(y.Speed));
         }
+
         public void Update()
         {
-            if (currentPlayer.CurrentState().ToString() == "ATTACK")
-                currentPlayer.DealDamage(target, currentPlayer.Damage);
+            if (typeof(Player).ToString() == currentPlayer.ToString())
+            {
+                if (currentPlayer.CurrentState().ToString() == "ATTACK")
+                    currentPlayer.DealDamage(target, currentPlayer.Damage);
+               
+            }
+            else if (typeof(Enemy).ToString() == currentPlayer.ToString())
+            {
+                GetTarget(new object(), new EventArgs());
+            }
             NextPlayer();
             currentPlayer.TurnsTaken++;
         }
-        public List<Control> CreateButtons()
+
+        public List<Control> CreateControls()
         {
             int i = 1;
             int j = 1;
@@ -125,25 +138,66 @@ namespace CombatForms.Classes
                 }
                 currentPlayer.PlayerButton.Size = new System.Drawing.Size(150, 50);
                 currentPlayer.PlayerButton.Click += GetTarget;
-               
+
                 tmp.Add(currentPlayer.PlayerButton);
+                NextPlayer();
+            }
+            i = 1;
+            j = 1;
+            foreach (Entity e in entities)
+            {
+
+                currentPlayer.HealthBar = new ProgressBar();
+                if (typeof(Player).ToString() == currentPlayer.ToString())
+                {
+
+                    currentPlayer.HealthBar.Location = new System.Drawing.Point(135, 200 * i);
+                    (currentPlayer.HealthBar as ProgressBar).Value = (int)((currentPlayer.Health/currentPlayer.MaxHealth)*100f);
+
+                    i++;
+                }
+
+                if (typeof(Enemy).ToString() == currentPlayer.ToString())
+                {
+
+                    currentPlayer.HealthBar.Location = new System.Drawing.Point(715, 200 * j);
+                    (currentPlayer.HealthBar as ProgressBar).Value = (int)((currentPlayer.Health / currentPlayer.MaxHealth) * 100f);
+
+
+                    j++;
+                }
+                currentPlayer.HealthBar.Size = new System.Drawing.Size(100, 25);
+              
+
+                tmp.Add(currentPlayer.HealthBar);
                 NextPlayer();
             }
             return tmp;
         }
         private void GetTarget(object sender, EventArgs e)
         {
-
-            foreach (Entity E in entities)
+            target = currentPlayer;
+            if (typeof(Player).ToString() == currentPlayer.ToString())
             {
-                if (E.Name == (sender as Control).Text && !(currentPlayer.ToString() == E.ToString()))
+                foreach (Entity E in entities)
                 {
-                    target = E;
-                   
-                    return;
+                    if (E.Name == (sender as Control).Text && !(currentPlayer.ToString() == E.ToString()))
+                    {
+                        target = E;
+
+                        return;
+                    }
                 }
             }
+            else if(typeof(Enemy).ToString() == currentPlayer.ToString())
+            {
+                Random r = new Random();
+                while(target.ToString()!=typeof(Player).ToString())
+                {
+                    target = entities[r.Next(0, entities.Count)];
 
+                }
+            }
         }
         public Entity target;
         public List<Entity> entities;

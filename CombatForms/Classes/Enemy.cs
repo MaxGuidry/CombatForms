@@ -17,7 +17,7 @@ namespace CombatForms.Classes
             m_Alive = true;
             m_Level = 1;
             m_Health = 50f;
-
+            m_MaxHealth = m_Health;
             m_Speed = 5f;
         }
 
@@ -28,6 +28,7 @@ namespace CombatForms.Classes
             m_Alive = true;
             m_Level = level;
             m_Health = health;
+            m_MaxHealth = health;
             m_Name = name;
             m_Speed = speed;
         }
@@ -65,12 +66,11 @@ namespace CombatForms.Classes
         #region FIELDS AND PROPERTIES
         private int m_Level;
         
-        private float m_MaxHealth;
+      
         
         public int Level { get { return m_Level; } set { m_Level = value; } }
       
-        public float MaxHealth { get { return m_MaxHealth; } set { m_MaxHealth = value; } }
-
+        
 
         #endregion
     }

@@ -32,6 +32,7 @@ namespace CombatForms.Classes
             m_Alive = true;
             m_Level = level;
             m_Health = health;
+            m_MaxHealth = health;
             m_Damage = baseDamage;
             m_Speed = speed;
 
@@ -73,6 +74,7 @@ namespace CombatForms.Classes
 
             }
         }
+       
 
 
 
@@ -84,14 +86,14 @@ namespace CombatForms.Classes
         private float m_ExpToNextLevel;
         private int m_Level;
      
-        private float m_MaxHealth;
+      
 
 
 
         public float EXP { get { return m_Exp; } set { m_Exp = value; } }
         public int Level { get { return m_Level; } set { m_Level = value; } }
        
-        public float MaxHealth { get { return m_MaxHealth; } set { m_MaxHealth = value; } }
+       
 
 
         #endregion
