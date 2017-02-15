@@ -17,6 +17,7 @@ namespace CombatForms.Classes
 
             m_Alive = true;
             m_Level = 1;
+            m_Damage = 20f;
             m_Health = 50f;
             m_MaxHealth = m_Health;
             m_Speed = 5f;
@@ -24,7 +25,7 @@ namespace CombatForms.Classes
 
         public Enemy(string name,float health, int level, float baseDamage, float speed)
         {
-
+            m_Damage = baseDamage;
 
             m_Alive = true;
             m_Level = level;
@@ -36,8 +37,7 @@ namespace CombatForms.Classes
         public override void DealDamage(IDamagable target, float Amount)
         {
             target.TakeDamage(Amount);
-            if (!(target as Entity).Alive)
-                (target as Player).GainEXP(target);
+            
         }
 
         public override void TakeDamage(float Amount)

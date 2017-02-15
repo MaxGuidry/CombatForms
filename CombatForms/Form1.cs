@@ -25,6 +25,7 @@ namespace CombatForms
                 this.Controls.Add(c);
             }
             Combat.Instance.Start();
+            PlayerHealth.Value = (int)((Combat.Instance.currentPlayer.Health / Combat.Instance.currentPlayer.MaxHealth) * 100f);
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -57,7 +58,7 @@ namespace CombatForms
         {
          
             Combat.Instance.Update();
-
+            PlayerHealth.Value = (int)((Combat.Instance.currentPlayer.Health/Combat.Instance.currentPlayer.MaxHealth)*100f);
             richTextBox1 = Combat.Instance.UpdateCombatUI(richTextBox1);
 
         }

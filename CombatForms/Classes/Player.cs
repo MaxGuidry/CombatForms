@@ -40,6 +40,8 @@ namespace CombatForms.Classes
         public override void DealDamage(IDamagable target, float Amount)
         {
             target.TakeDamage(Amount);
+            if (!(target as Entity).Alive)
+                this.GainEXP(target);
         }
 
         public override void TakeDamage(float Amount)

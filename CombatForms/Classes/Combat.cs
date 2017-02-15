@@ -73,14 +73,14 @@ namespace CombatForms.Classes
 
         private void OnPlayerDeath()
         {
-            if (typeof(Player).ToString() == currentPlayer.ToString())
+            if (typeof(Player).ToString() == target.ToString())
             {
-                entities.Remove(currentPlayer);
+                entities.Remove(target);
                 return;
             }
 
-            int tmplv = (currentPlayer as Enemy).Level + 1;
-            entities.Remove(currentPlayer);
+            int tmplv = (target as Enemy).Level + 1;
+            entities.Remove(target);
             GenerateNewEnemy(tmplv);
         }
         public void Start()
@@ -98,16 +98,18 @@ namespace CombatForms.Classes
         {
             if (typeof(Player).ToString() == currentPlayer.ToString())
             {
-                if (currentPlayer.CurrentState().ToString() == "ATTACK")
+                if (currentPlayer.CurrentState().ToString() == "ATTACK"&&target!=null)
                     currentPlayer.DealDamage(target, currentPlayer.Damage);
 
             }
             else if (typeof(Enemy).ToString() == currentPlayer.ToString())
             {
                 GetTarget(new object(), new EventArgs());
+                currentPlayer.DealDamage(target, currentPlayer.Damage);
+                
             }
             NextPlayer();
-            currentPlayer.TurnsTaken++;
+           
         }
 
         public List<Control> CreateControls()
