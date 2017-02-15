@@ -38,7 +38,7 @@ namespace CombatForms.Classes
                 {
 
                     currentIndex = 0;
-                    
+
                 }
                 currentPlayer = entities[currentIndex];
             }
@@ -100,7 +100,7 @@ namespace CombatForms.Classes
             {
                 if (currentPlayer.CurrentState().ToString() == "ATTACK")
                     currentPlayer.DealDamage(target, currentPlayer.Damage);
-               
+
             }
             else if (typeof(Enemy).ToString() == currentPlayer.ToString())
             {
@@ -138,7 +138,7 @@ namespace CombatForms.Classes
                 }
                 currentPlayer.PlayerButton.Size = new System.Drawing.Size(150, 50);
                 currentPlayer.PlayerButton.Click += GetTarget;
-
+                
                 tmp.Add(currentPlayer.PlayerButton);
                 NextPlayer();
             }
@@ -152,7 +152,7 @@ namespace CombatForms.Classes
                 {
 
                     currentPlayer.HealthBar.Location = new System.Drawing.Point(135, 200 * i);
-                    (currentPlayer.HealthBar as ProgressBar).Value = (int)((currentPlayer.Health/currentPlayer.MaxHealth)*100f);
+                    (currentPlayer.HealthBar as ProgressBar).Value = (int)((currentPlayer.Health / currentPlayer.MaxHealth) * 100f);
 
                     i++;
                 }
@@ -167,7 +167,7 @@ namespace CombatForms.Classes
                     j++;
                 }
                 currentPlayer.HealthBar.Size = new System.Drawing.Size(100, 25);
-              
+
 
                 tmp.Add(currentPlayer.HealthBar);
                 NextPlayer();
@@ -189,15 +189,23 @@ namespace CombatForms.Classes
                     }
                 }
             }
-            else if(typeof(Enemy).ToString() == currentPlayer.ToString())
+            else if (typeof(Enemy).ToString() == currentPlayer.ToString())
             {
                 Random r = new Random();
-                while(target.ToString()!=typeof(Player).ToString())
+                while (target.ToString() != typeof(Player).ToString())
                 {
                     target = entities[r.Next(0, entities.Count)];
 
                 }
             }
+        }
+        public RichTextBox UpdateCombatUI(RichTextBox b)
+        {
+            RichTextBox rtb = b;
+            rtb.Text = "Current Player: " + currentPlayer.Name + "\nCurrent State: " + currentPlayer.CurrentState().ToString() + "\n\n\nTarget: ";
+            if (target != null)
+                rtb.Text += target.Name;
+            return rtb;
         }
         public Entity target;
         public List<Entity> entities;

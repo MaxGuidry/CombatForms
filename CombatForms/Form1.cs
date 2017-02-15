@@ -29,7 +29,7 @@ namespace CombatForms
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            richTextBox1.Text = "Current Player: " + Combat.Instance.currentPlayer.Name+"\n"+"Current State: " + Combat.Instance.currentPlayer.CurrentState().ToString();
+            richTextBox1 = Combat.Instance.UpdateCombatUI(richTextBox1);
         }
 
         private void PlayerHealth_Click(object sender, EventArgs e)
@@ -45,12 +45,12 @@ namespace CombatForms
         private void Attack_Click(object sender, EventArgs e)
         {
             Combat.Instance.currentPlayer.ChangePlayerState("ATTACK");
-            richTextBox1.Text = "Current Player: " + Combat.Instance.currentPlayer.Name + "\n" + "Current State: " + Combat.Instance.currentPlayer.CurrentState().ToString();
+            richTextBox1 = Combat.Instance.UpdateCombatUI(richTextBox1);
         }
         private void Defend_Click(object sender, EventArgs e)
         {
             Combat.Instance.currentPlayer.ChangePlayerState("DEFEND");
-            richTextBox1.Text = "Current Player: " + Combat.Instance.currentPlayer.Name + "\n" + "Current State: " + Combat.Instance.currentPlayer.CurrentState().ToString();
+            richTextBox1 = Combat.Instance.UpdateCombatUI(richTextBox1);
         }
 
         private void EndTurn_Click(object sender, EventArgs e)
@@ -58,7 +58,7 @@ namespace CombatForms
          
             Combat.Instance.Update();
 
-            richTextBox1.Text="Current Player: " + Combat.Instance.currentPlayer.Name + "\n" + "Current State: " + Combat.Instance.currentPlayer.CurrentState().ToString();
+            richTextBox1 = Combat.Instance.UpdateCombatUI(richTextBox1);
 
         }
 

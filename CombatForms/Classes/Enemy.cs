@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using CombatForms.Iterfaces;
+using System.Windows.Forms;
 namespace CombatForms.Classes
 {
     public class Enemy : Entity
@@ -44,10 +45,12 @@ namespace CombatForms.Classes
             if (m_Health - Amount < 0)
             {
                 m_Health = 0;
+                (HealthBar as ProgressBar).Value =(int)m_Health;
                 this.onDeath.Invoke();
                 return;
             }
             m_Health -= Amount;
+            (HealthBar as ProgressBar).Value = (int)m_Health;
         }
 
         public void ChooseAction()
