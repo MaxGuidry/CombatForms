@@ -9,7 +9,7 @@ namespace CombatForms.Classes
 {
     public class Combat
     {
-
+        public Form1 a;
 
         private static Combat instance;
         private Combat()
@@ -42,14 +42,13 @@ namespace CombatForms.Classes
                 }
                 currentPlayer = entities[currentIndex];
             }
-            target = null;
+           
         }
         public void AddPlayer(Entity e)
         {
             if (e.onDeath == null)
             {
                 e.onDeath = OnPlayerDeath;
-
                 entities.Add(e);
                 SortEntities();
                 return;
@@ -58,15 +57,26 @@ namespace CombatForms.Classes
             entities.Add(e);
             SortEntities();
         }
-        public void GenerateNewEnemy(int level)
+        public void GenerateNewEnemy(Enemy dead)
         {
             Random r = new Random();
             Enemy e = new Enemy();
-            Enemy ne = new Enemy(currentPlayer.Name + " Level:" + level, (float)Math.Pow((double)e.Health, r.NextDouble() * (1.3d - 1d) + 1d),
-                   level,
+            Enemy ne = new Enemy(target.Name + " Level:" + dead.Level, (float)Math.Pow((double)e.Health, r.NextDouble() * (1.3d - 1d) + 1d),
+                   dead.Level,
                   (float)Math.Pow((double)e.Damage,
                   r.NextDouble() * (1.3d - 1d) + 1d),
                   (float)Math.Pow(e.Speed, r.NextDouble() * (1.3d - 1d) + 1d));
+            ne.PlayerButton = dead.PlayerButton;
+            ne.PlayerButton.Text = ne.Name;
+            ne.HealthBar = dead.HealthBar;
+            ne.onDeath = OnPlayerDeath;
+            ne.HealthBar = new ProgressBar();
+            ne.HealthBar.Location = new System.Drawing.Point(715, currentPlayer.PlayerButton.Location.Y + currentPlayer.PlayerButton.Size.Height);
+            ne.HealthBar.Value = (int)((ne.Health / ne.MaxHealth) * 100f);
+            ne.Info = new RichTextBox();
+            ne.Info.Location = new System.Drawing.Point(700, ne.HealthBar.Location.Y + ne.HealthBar.Size.Height);
+            ne.Info.Text = "Health: " + ne.Health + "\nDamage: " + ne.Damage +
+                        "\nSpeed: " + ne.Speed + "\nArmor: " + ne.Armor;
             entities.Add(ne);
             SortEntities();
         }
@@ -79,9 +89,9 @@ namespace CombatForms.Classes
                 return;
             }
 
-            int tmplv = (target as Enemy).Level + 1;
+            
             entities.Remove(target);
-            GenerateNewEnemy(tmplv);
+            GenerateNewEnemy(target as Enemy);
         }
         public void Start()
         {
@@ -98,18 +108,21 @@ namespace CombatForms.Classes
         {
             if (typeof(Player).ToString() == currentPlayer.ToString())
             {
-                if (currentPlayer.CurrentState().ToString() == "ATTACK"&&target!=null)
+                if (currentPlayer.CurrentState().ToString() == "WAIT")
+                    return;
+                if (currentPlayer.CurrentState().ToString() == "ATTACK" && target != null)
                     currentPlayer.DealDamage(target, currentPlayer.Damage);
 
             }
             else if (typeof(Enemy).ToString() == currentPlayer.ToString())
             {
+                //System.Threading.Thread.Sleep(1000);
                 GetTarget(new object(), new EventArgs());
                 currentPlayer.DealDamage(target, currentPlayer.Damage);
-                
+
             }
             NextPlayer();
-           
+
         }
 
         public List<Control> CreateControls()
@@ -140,7 +153,7 @@ namespace CombatForms.Classes
                 }
                 currentPlayer.PlayerButton.Size = new System.Drawing.Size(150, 50);
                 currentPlayer.PlayerButton.Click += GetTarget;
-                
+
                 tmp.Add(currentPlayer.PlayerButton);
                 NextPlayer();
             }
@@ -153,7 +166,7 @@ namespace CombatForms.Classes
                 if (typeof(Player).ToString() == currentPlayer.ToString())
                 {
 
-                    currentPlayer.HealthBar.Location = new System.Drawing.Point(135, 200 * i);
+                    currentPlayer.HealthBar.Location = new System.Drawing.Point(135, currentPlayer.PlayerButton.Location.Y +currentPlayer.PlayerButton.Size.Height);
                     (currentPlayer.HealthBar as ProgressBar).Value = (int)((currentPlayer.Health / currentPlayer.MaxHealth) * 100f);
 
                     i++;
@@ -162,10 +175,8 @@ namespace CombatForms.Classes
                 if (typeof(Enemy).ToString() == currentPlayer.ToString())
                 {
 
-                    currentPlayer.HealthBar.Location = new System.Drawing.Point(715, 200 * j);
+                    currentPlayer.HealthBar.Location = new System.Drawing.Point(715, currentPlayer.PlayerButton.Location.Y + currentPlayer.PlayerButton.Size.Height);
                     (currentPlayer.HealthBar as ProgressBar).Value = (int)((currentPlayer.Health / currentPlayer.MaxHealth) * 100f);
-
-
                     j++;
                 }
                 currentPlayer.HealthBar.Size = new System.Drawing.Size(100, 25);
@@ -174,6 +185,39 @@ namespace CombatForms.Classes
                 tmp.Add(currentPlayer.HealthBar);
                 NextPlayer();
             }
+            i = 1;
+            j = 1;
+            foreach (Entity e in entities)
+            {
+
+                currentPlayer.Info = new RichTextBox();
+                if (typeof(Player).ToString() == currentPlayer.ToString())
+                {
+
+                    currentPlayer.Info.Location = new System.Drawing.Point(135, currentPlayer.HealthBar.Location.Y + currentPlayer.HealthBar.Size.Height);
+                    (currentPlayer.Info as RichTextBox).Text = "Health: " + currentPlayer.Health + "\nDamage: " + currentPlayer.Damage +
+                        "\nSpeed: " + currentPlayer.Speed + "\nArmor: " + currentPlayer.Armor;
+
+                    i++;
+                }
+
+                if (typeof(Enemy).ToString() == currentPlayer.ToString())
+                {
+
+                    currentPlayer.Info.Location = new System.Drawing.Point(715, currentPlayer.HealthBar.Location.Y + currentPlayer.HealthBar.Size.Height);
+                    (currentPlayer.Info as RichTextBox).Text = (currentPlayer.Info as RichTextBox).Text = "Health: " + currentPlayer.Health + "\nDamage: " + currentPlayer.Damage +
+                        "\nSpeed: " + currentPlayer.Speed + "\nArmor: " + currentPlayer.Armor;
+
+
+                    j++;
+                }
+                currentPlayer.Info.Size = new System.Drawing.Size(100, 100);
+
+
+                tmp.Add(currentPlayer.Info);
+                NextPlayer();
+            }
+
             return tmp;
         }
         private void GetTarget(object sender, EventArgs e)
@@ -200,15 +244,43 @@ namespace CombatForms.Classes
 
                 }
             }
+
         }
-        public RichTextBox UpdateCombatUI(RichTextBox b)
+        public void UpdateUI()
         {
-            RichTextBox rtb = b;
-            rtb.Text = "Current Player: " + currentPlayer.Name + "\nCurrent State: " + currentPlayer.CurrentState().ToString() + "\n\n\nTarget: ";
-            if (target != null)
-                rtb.Text += target.Name;
-            return rtb;
-        }
+
+            foreach (Entity e in entities)
+            {
+                
+                if (typeof(Player).ToString() == e.ToString())
+                {
+                    if (e.Info == null)
+                    {
+                        e.Info = new RichTextBox();
+                        e.Info.Location= new System.Drawing.Point(135, e.HealthBar.Location.Y + e.HealthBar.Size.Height);
+                    }
+                    (e.Info ).Text = "Health: " + e.Health + "\nDamage: " + e.Damage +
+                        "\nSpeed: " + e.Speed + "\nArmor: " + e.Armor;
+
+
+                }
+
+                if (typeof(Enemy).ToString() == e.ToString())
+                {
+
+                    if (e.Info == null)
+                    {
+                        e.Info = new RichTextBox();
+                    }
+                    a.Controls.Add(e.Info);
+                    e.Info.Location = new System.Drawing.Point(715, e.HealthBar.Location.Y + e.HealthBar.Size.Height);
+                    (e.Info).Text = (e.Info as RichTextBox).Text = "Health: " + e.Health + "\nDamage: " + e.Damage +
+                        "\nSpeed: " + e.Speed + "\nArmor: " + e.Armor;
+
+                }
+            }
+        } 
+
         public Entity target;
         public List<Entity> entities;
         public Entity currentPlayer;

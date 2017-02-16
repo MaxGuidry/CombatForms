@@ -17,7 +17,8 @@ namespace CombatForms.Classes
             controller.AddTransition(EntityState.ATTACK, EntityState.DEFEND);
             controller.AddTransition(EntityState.DEFEND, EntityState.ATTACK);
             controller.Start(EntityState.WAIT);
-            
+            m_Armor = 10f;
+           
         }
         public void Start()
         {
@@ -40,7 +41,7 @@ namespace CombatForms.Classes
 
         public virtual void TakeDamage(float Amount)
         {
-
+              
         }
 
         public virtual void DealDamage(IDamagable target, float Amount)
@@ -67,8 +68,10 @@ namespace CombatForms.Classes
         protected int m_TurnsTaken;
         protected string m_Name;
         protected bool m_Alive;
+        protected float m_Armor;
         protected System.Windows.Forms.Control m_Button;
-        protected System.Windows.Forms.Control m_HealthBar;
+        protected System.Windows.Forms.ProgressBar m_HealthBar;
+        protected System.Windows.Forms.RichTextBox m_Info;
         public float Damage { get { return m_Damage; } set { m_Damage = value; } }
         public float Health { get { return m_Health; } set { m_Health = value; } }
 
@@ -77,8 +80,10 @@ namespace CombatForms.Classes
         public int TurnsTaken { get { return m_TurnsTaken; } set { m_TurnsTaken = value; } }
         public string Name { get { return m_Name; } set { m_Name = value; } }
         public System.Windows.Forms.Control PlayerButton { get { return m_Button; } set { m_Button = value; } }
-        public System.Windows.Forms.Control HealthBar { get { return m_HealthBar; } set { m_HealthBar = value; } }
+        public System.Windows.Forms.ProgressBar HealthBar { get { return m_HealthBar; } set { m_HealthBar = value; } }
         public bool Alive { get { return m_Alive; } set { m_Alive = value; } }
         public float MaxHealth { get { return m_MaxHealth; } set { m_MaxHealth = value; } }
+        public float Armor { get { return m_Armor; }set { m_Armor = value; } }
+        public System.Windows.Forms.RichTextBox Info { get { return m_Info; }set { m_Info = value; } }
     }
 }

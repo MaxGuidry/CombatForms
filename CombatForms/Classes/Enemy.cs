@@ -45,12 +45,14 @@ namespace CombatForms.Classes
             if (m_Health - Amount < 0)
             {
                 m_Health = 0;
+                m_Alive = false;
                 (HealthBar as ProgressBar).Value =(int)m_Health;
+                m_Info = null;
                 this.onDeath.Invoke();
                 return;
             }
             m_Health -= Amount;
-            (HealthBar as ProgressBar).Value = (int)m_Health;
+            (HealthBar as ProgressBar).Value = (int)((m_Health/m_MaxHealth)*100f);
         }
 
         public void ChooseAction()

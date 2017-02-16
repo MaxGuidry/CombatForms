@@ -18,7 +18,6 @@ namespace CombatForms.Classes
         {
 
             m_ExpToNextLevel = 100f;
-
             m_Alive = true;
             m_Level = 1;
 
@@ -50,6 +49,7 @@ namespace CombatForms.Classes
             {
                 m_Health = 0;
                 (HealthBar as ProgressBar).Value = (int)m_Health;
+                m_Info = null;
                 this.onDeath.Invoke();
                 return;
             }
@@ -61,6 +61,7 @@ namespace CombatForms.Classes
 
         private void LevelUp()
         {
+            m_Health = m_MaxHealth;
             m_Level++;
             m_ExpToNextLevel = (5f * (float)Math.Pow((double)m_Level, 2d)) + 95f;
             StatBuff t = new StatBuff();
