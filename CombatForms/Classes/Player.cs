@@ -48,13 +48,13 @@ namespace CombatForms.Classes
             if (m_Health - Amount < 0)
             {
                 m_Health = 0;
-                (HealthBar as ProgressBar).Value = (int)m_Health;
+                (HealthBar as ProgressBar).Value = (int)((m_Health / m_MaxHealth) * 100f);
                 m_Info = null;
                 this.onDeath.Invoke();
                 return;
             }
             m_Health -= Amount;
-            (HealthBar as ProgressBar).Value = (int)m_Health;
+            (HealthBar as ProgressBar).Value = (int)((m_Health/m_MaxHealth)*100f);
         }
 
 
@@ -67,6 +67,7 @@ namespace CombatForms.Classes
             StatBuff t = new StatBuff();
             t.Visible = true;
             t.Activate();
+            Combat.Instance.a.Visible = false;
 
         }
         public void GainEXP(IDamagable target)

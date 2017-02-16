@@ -12,12 +12,14 @@ namespace CombatForms.Classes
         public Form1 a;
 
         private static Combat instance;
+
         private Combat()
         {
             entities = new List<Entity>();
 
 
         }
+
         public static Combat Instance
         {
             get
@@ -28,6 +30,7 @@ namespace CombatForms.Classes
             }
 
         }
+
 
         public void NextPlayer()
         {
@@ -42,8 +45,9 @@ namespace CombatForms.Classes
                 }
                 currentPlayer = entities[currentIndex];
             }
-           
+
         }
+
         public void AddPlayer(Entity e)
         {
             if (e.onDeath == null)
@@ -57,21 +61,23 @@ namespace CombatForms.Classes
             entities.Add(e);
             SortEntities();
         }
+
         public void GenerateNewEnemy(Enemy dead)
         {
             Random r = new Random();
             Enemy e = new Enemy();
-            Enemy ne = new Enemy(target.Name + " Level:" + dead.Level, (float)Math.Pow((double)e.Health, r.NextDouble() * (1.3d - 1d) + 1d),
-                   dead.Level,
+            Enemy ne = new Enemy(target.Name, (float)Math.Pow((double)e.Health, r.NextDouble() * (1.3d - 1d) + 1d),
+                   dead.Level + 1,
                   (float)Math.Pow((double)e.Damage,
                   r.NextDouble() * (1.3d - 1d) + 1d),
                   (float)Math.Pow(e.Speed, r.NextDouble() * (1.3d - 1d) + 1d));
+            ne.Info = dead.Info;
             ne.PlayerButton = dead.PlayerButton;
             ne.PlayerButton.Text = ne.Name;
             ne.HealthBar = dead.HealthBar;
             ne.onDeath = OnPlayerDeath;
             ne.HealthBar = new ProgressBar();
-            ne.HealthBar.Location = new System.Drawing.Point(715, currentPlayer.PlayerButton.Location.Y + currentPlayer.PlayerButton.Size.Height);
+            ne.HealthBar.Location = new System.Drawing.Point(715, dead.PlayerButton.Location.Y + dead.PlayerButton.Size.Height);
             ne.HealthBar.Value = (int)((ne.Health / ne.MaxHealth) * 100f);
             ne.Info = new RichTextBox();
             ne.Info.Location = new System.Drawing.Point(700, ne.HealthBar.Location.Y + ne.HealthBar.Size.Height);
@@ -89,19 +95,24 @@ namespace CombatForms.Classes
                 return;
             }
 
-            
-            entities.Remove(target);
             GenerateNewEnemy(target as Enemy);
+            a.Controls.Remove(target.Info);
+            a.Controls.Remove(target.HealthBar);
+            entities.Remove(target);
+            SortEntities();
         }
+
         public void Start()
         {
             currentIndex = 0;
             currentPlayer = entities[currentIndex];
 
         }
+
         public void SortEntities()
         {
             entities.Sort((x, y) => -1 * x.Speed.CompareTo(y.Speed));
+            currentIndex = entities.IndexOf(currentPlayer);
         }
 
         public void Update()
@@ -116,13 +127,14 @@ namespace CombatForms.Classes
             }
             else if (typeof(Enemy).ToString() == currentPlayer.ToString())
             {
-                //System.Threading.Thread.Sleep(1000);
                 GetTarget(new object(), new EventArgs());
                 currentPlayer.DealDamage(target, currentPlayer.Damage);
 
             }
-            NextPlayer();
-
+            if (a.Visible == true)
+                NextPlayer();
+            target = null;
+            UpdateUI();
         }
 
         public List<Control> CreateControls()
@@ -166,7 +178,7 @@ namespace CombatForms.Classes
                 if (typeof(Player).ToString() == currentPlayer.ToString())
                 {
 
-                    currentPlayer.HealthBar.Location = new System.Drawing.Point(135, currentPlayer.PlayerButton.Location.Y +currentPlayer.PlayerButton.Size.Height);
+                    currentPlayer.HealthBar.Location = new System.Drawing.Point(135, currentPlayer.PlayerButton.Location.Y + currentPlayer.PlayerButton.Size.Height);
                     (currentPlayer.HealthBar as ProgressBar).Value = (int)((currentPlayer.Health / currentPlayer.MaxHealth) * 100f);
 
                     i++;
@@ -220,6 +232,7 @@ namespace CombatForms.Classes
 
             return tmp;
         }
+
         private void GetTarget(object sender, EventArgs e)
         {
             target = currentPlayer;
@@ -246,20 +259,21 @@ namespace CombatForms.Classes
             }
 
         }
+
         public void UpdateUI()
         {
 
             foreach (Entity e in entities)
             {
-                
+
                 if (typeof(Player).ToString() == e.ToString())
                 {
                     if (e.Info == null)
                     {
                         e.Info = new RichTextBox();
-                        e.Info.Location= new System.Drawing.Point(135, e.HealthBar.Location.Y + e.HealthBar.Size.Height);
+                        e.Info.Location = new System.Drawing.Point(135, e.HealthBar.Location.Y + e.HealthBar.Size.Height);
                     }
-                    (e.Info ).Text = "Health: " + e.Health + "\nDamage: " + e.Damage +
+                    (e.Info).Text = "Health: " + e.Health + "\nDamage: " + e.Damage +
                         "\nSpeed: " + e.Speed + "\nArmor: " + e.Armor;
 
 
@@ -268,18 +282,22 @@ namespace CombatForms.Classes
                 if (typeof(Enemy).ToString() == e.ToString())
                 {
 
-                    if (e.Info == null)
+                    if (!a.Controls.Contains(e.Info))
                     {
-                        e.Info = new RichTextBox();
+
+                        e.Info.Location = new System.Drawing.Point(715, e.HealthBar.Location.Y + e.HealthBar.Size.Height);
+
+                        a.Controls.Add(e.Info);
+                        a.Controls.Add(e.HealthBar);
                     }
-                    a.Controls.Add(e.Info);
-                    e.Info.Location = new System.Drawing.Point(715, e.HealthBar.Location.Y + e.HealthBar.Size.Height);
+
                     (e.Info).Text = (e.Info as RichTextBox).Text = "Health: " + e.Health + "\nDamage: " + e.Damage +
                         "\nSpeed: " + e.Speed + "\nArmor: " + e.Armor;
 
                 }
             }
-        } 
+        }
+
 
         public Entity target;
         public List<Entity> entities;

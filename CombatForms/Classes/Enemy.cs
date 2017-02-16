@@ -42,12 +42,12 @@ namespace CombatForms.Classes
 
         public override void TakeDamage(float Amount)
         {
-            if (m_Health - Amount < 0)
+            if (m_Health - Amount <= 0)
             {
                 m_Health = 0;
                 m_Alive = false;
                 (HealthBar as ProgressBar).Value =(int)m_Health;
-                m_Info = null;
+                
                 this.onDeath.Invoke();
                 return;
             }

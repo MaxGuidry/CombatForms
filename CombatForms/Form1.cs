@@ -67,7 +67,7 @@ namespace CombatForms
             }
             Combat.Instance.Start();
             pictureBox1.Location = new Point(Combat.Instance.currentPlayer.PlayerButton.Location.X + 150, Combat.Instance.currentPlayer.PlayerButton.Location.Y - 75);
-
+            pictureBox2.Visible = false;
             PlayerHealth.Value = (int)((Combat.Instance.currentPlayer.Health / Combat.Instance.currentPlayer.MaxHealth) * 100f);
         }
 
@@ -88,6 +88,9 @@ namespace CombatForms
         }
         private void Attack_Click(object sender, EventArgs e)
         {
+            pictureBox2.SendToBack();
+            pictureBox2.Visible = true;
+            pictureBox2.Location = new Point(Combat.Instance.target.PlayerButton.Location.X - 183, Combat.Instance.target.PlayerButton.Location.Y-75);
             Combat.Instance.currentPlayer.ChangePlayerState("ATTACK");
             UpdateCombatUI();
         }
@@ -101,7 +104,7 @@ namespace CombatForms
         {
             
             Combat.Instance.Update();
-
+            pictureBox2.Visible = false;
             pictureBox1.Location = new Point(Combat.Instance.currentPlayer.PlayerButton.Location.X + 150, Combat.Instance.currentPlayer.PlayerButton.Location.Y - 75);
             PlayerHealth.Value = (int)((Combat.Instance.currentPlayer.Health / Combat.Instance.currentPlayer.MaxHealth) * 100f);
             UpdateCombatUI();
