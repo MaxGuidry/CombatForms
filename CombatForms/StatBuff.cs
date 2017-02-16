@@ -30,6 +30,7 @@ namespace CombatForms
             Combat.Instance.a.Enabled = true;
             Combat.Instance.NextPlayer();
             Combat.Instance.a.UpdateCombatUI();
+            Combat.Instance.a.Show();
         }
 
         private void Armor_Click(object sender, EventArgs e)

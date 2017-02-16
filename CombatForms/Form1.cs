@@ -29,7 +29,7 @@ namespace CombatForms
 
             if (Combat.Instance.currentPlayer.ToString() == typeof(Enemy).ToString())
             {
-                //MessageBox.Show("Press \"End Turn\" to have the enemy take their turn");
+                
                 Entity e = Combat.Instance.currentPlayer;
                 Combat.Instance.currentPlayer.PlayerButton.Enabled = false;
                 Combat.Instance.NextPlayer();
