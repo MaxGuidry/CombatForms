@@ -88,11 +88,13 @@ namespace CombatForms
         }
         private void Attack_Click(object sender, EventArgs e)
         {
-            pictureBox2.SendToBack();
-            pictureBox2.Visible = true;
             if (Combat.Instance.target != null)
+            {
                 pictureBox2.Location = new Point(Combat.Instance.target.PlayerButton.Location.X - 183, Combat.Instance.target.PlayerButton.Location.Y - 75);
-            Combat.Instance.currentPlayer.ChangePlayerState("ATTACK");
+                pictureBox2.SendToBack();
+                pictureBox2.Visible = true;
+            }
+                Combat.Instance.currentPlayer.ChangePlayerState("ATTACK");
             UpdateCombatUI();
         }
         private void Defend_Click(object sender, EventArgs e)
