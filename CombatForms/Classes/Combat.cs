@@ -44,6 +44,7 @@ namespace CombatForms.Classes
 
                 }
                 currentPlayer = entities[currentIndex];
+                currentPlayer.ChangePlayerState("WAIT");
             }
 
         }
@@ -123,7 +124,7 @@ namespace CombatForms.Classes
                     return;
                 if (currentPlayer.CurrentState().ToString() == "ATTACK" && target != null)
                     currentPlayer.DealDamage(target, currentPlayer.Damage);
-
+               
             }
             else if (typeof(Enemy).ToString() == currentPlayer.ToString())
             {
@@ -131,7 +132,7 @@ namespace CombatForms.Classes
                 currentPlayer.DealDamage(target, currentPlayer.Damage);
 
             }
-            if (a.Visible == true)
+            if (a.Enabled == true)
                 NextPlayer();
             target = null;
             UpdateUI();
@@ -208,7 +209,7 @@ namespace CombatForms.Classes
 
                     currentPlayer.Info.Location = new System.Drawing.Point(135, currentPlayer.HealthBar.Location.Y + currentPlayer.HealthBar.Size.Height);
                     (currentPlayer.Info as RichTextBox).Text = "Health: " + currentPlayer.Health + "\nDamage: " + currentPlayer.Damage +
-                        "\nSpeed: " + currentPlayer.Speed + "\nArmor: " + currentPlayer.Armor;
+                        "\nSpeed: " + currentPlayer.Speed + "\nArmor: " + currentPlayer.Armor + "\nLevel: " + currentPlayer.Level;
 
                     i++;
                 }
@@ -217,8 +218,8 @@ namespace CombatForms.Classes
                 {
 
                     currentPlayer.Info.Location = new System.Drawing.Point(715, currentPlayer.HealthBar.Location.Y + currentPlayer.HealthBar.Size.Height);
-                    (currentPlayer.Info as RichTextBox).Text = (currentPlayer.Info as RichTextBox).Text = "Health: " + currentPlayer.Health + "\nDamage: " + currentPlayer.Damage +
-                        "\nSpeed: " + currentPlayer.Speed + "\nArmor: " + currentPlayer.Armor;
+                    (currentPlayer.Info as RichTextBox).Text = "Health: " + currentPlayer.Health + "\nDamage: " + currentPlayer.Damage +
+                         "\nSpeed: " + currentPlayer.Speed + "\nArmor: " + currentPlayer.Armor+"\nLevel: " + currentPlayer.Level;
 
 
                     j++;
@@ -229,7 +230,37 @@ namespace CombatForms.Classes
                 tmp.Add(currentPlayer.Info);
                 NextPlayer();
             }
+            i = 1;
+            j = 1;
+            foreach (Entity e in entities)
+            {
 
+                currentPlayer.StateBox = new RichTextBox();
+                if (typeof(Player).ToString() == currentPlayer.ToString())
+                {
+
+                    currentPlayer.StateBox.Location = new System.Drawing.Point(265, currentPlayer.PlayerButton.Location.Y);
+                    currentPlayer.StateBox.Size = new System.Drawing.Size(150, 30);
+                    (currentPlayer.StateBox as RichTextBox).Text = "Current State: "+ currentPlayer.CurrentState().ToString();
+                    i++;
+                }
+
+                if (typeof(Enemy).ToString() == currentPlayer.ToString())
+                {
+
+                    currentPlayer.StateBox.Location = new System.Drawing.Point(845, currentPlayer.PlayerButton.Location.Y);
+                    currentPlayer.StateBox.Size = new System.Drawing.Size(150, 30);
+                    (currentPlayer.StateBox as RichTextBox).Text = "Current State: " + currentPlayer.CurrentState().ToString();
+
+
+                    j++;
+                }
+                currentPlayer.Info.Size = new System.Drawing.Size(100, 100);
+
+
+                tmp.Add(currentPlayer.StateBox);
+                NextPlayer();
+            }
             return tmp;
         }
 
@@ -271,11 +302,12 @@ namespace CombatForms.Classes
                     if (e.Info == null)
                     {
                         e.Info = new RichTextBox();
+                        
                         e.Info.Location = new System.Drawing.Point(135, e.HealthBar.Location.Y + e.HealthBar.Size.Height);
                     }
                     (e.Info).Text = "Health: " + e.Health + "\nDamage: " + e.Damage +
-                        "\nSpeed: " + e.Speed + "\nArmor: " + e.Armor;
-
+                        "\nSpeed: " + e.Speed + "\nArmor: " + e.Armor + "\nLevel: " + e.Level;
+                    e.StateBox.Text = "Current State: " + e.CurrentState().ToString();
 
                 }
 
@@ -284,16 +316,19 @@ namespace CombatForms.Classes
 
                     if (!a.Controls.Contains(e.Info))
                     {
-
+                        e.StateBox = new RichTextBox();
+                        e.StateBox.Location = new System.Drawing.Point(845, currentPlayer.PlayerButton.Location.Y);
+                        e.StateBox.Size = new System.Drawing.Size(150, 30);
                         e.Info.Location = new System.Drawing.Point(715, e.HealthBar.Location.Y + e.HealthBar.Size.Height);
 
                         a.Controls.Add(e.Info);
+                        a.Controls.Add(e.StateBox);
                         a.Controls.Add(e.HealthBar);
                     }
 
                     (e.Info).Text = (e.Info as RichTextBox).Text = "Health: " + e.Health + "\nDamage: " + e.Damage +
-                        "\nSpeed: " + e.Speed + "\nArmor: " + e.Armor;
-
+                        "\nSpeed: " + e.Speed + "\nArmor: " + e.Armor + "\nLevel: " + e.Level;
+                    e.StateBox.Text = "Current State: " + e.CurrentState().ToString();
                 }
             }
         }

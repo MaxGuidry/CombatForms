@@ -42,6 +42,8 @@ namespace CombatForms.Classes
 
         public override void TakeDamage(float Amount)
         {
+            if (CurrentState().ToString() == "DEFEND")
+                Amount -= m_Armor;
             if (m_Health - Amount <= 0)
             {
                 m_Health = 0;
@@ -67,17 +69,12 @@ namespace CombatForms.Classes
 
 
 
-        //FIELDS AND PROPERTIES
-        #region FIELDS AND PROPERTIES
-        private int m_Level;
-        
       
-        
-        public int Level { get { return m_Level; } set { m_Level = value; } }
+     
       
         
 
-        #endregion
+      
     }
 
 

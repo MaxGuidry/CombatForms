@@ -11,8 +11,10 @@ using CombatForms.Classes;
 using CombatForms.Iterfaces;
 namespace CombatForms
 {
+  
     public partial class Form1 : Form
     {
+        public int i = 0;
         public void TestEnemyCombat()
         {
             EndTurn_Click(new object(), new EventArgs());
@@ -27,7 +29,7 @@ namespace CombatForms
 
             if (Combat.Instance.currentPlayer.ToString() == typeof(Enemy).ToString())
             {
-                MessageBox.Show("Press \"End Turn\" to have the enemy take their turn");
+                //MessageBox.Show("Press \"End Turn\" to have the enemy take their turn");
                 Entity e = Combat.Instance.currentPlayer;
                 Combat.Instance.currentPlayer.PlayerButton.Enabled = false;
                 Combat.Instance.NextPlayer();
@@ -53,6 +55,8 @@ namespace CombatForms
                     Combat.Instance.NextPlayer();
                 }
             }
+            pictureBox1.SendToBack();
+            pictureBox1.Location = new Point(Combat.Instance.currentPlayer.PlayerButton.Location.X + 150, Combat.Instance.currentPlayer.PlayerButton.Location.Y - 75);
             Combat.Instance.UpdateUI();
 
         }
@@ -108,10 +112,11 @@ namespace CombatForms
 
             Combat.Instance.Update();
             pictureBox2.Visible = false;
-            pictureBox1.Location = new Point(Combat.Instance.currentPlayer.PlayerButton.Location.X + 150, Combat.Instance.currentPlayer.PlayerButton.Location.Y - 75);
+            
             PlayerHealth.Value = (int)((Combat.Instance.currentPlayer.Health / Combat.Instance.currentPlayer.MaxHealth) * 100f);
             UpdateCombatUI();
-
+            System.Diagnostics.Debug.WriteLine(i);
+            i++;
 
         }
 

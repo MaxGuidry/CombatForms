@@ -18,9 +18,9 @@ namespace CombatForms
             Player Viking = new Player("Viking",150f, 1, 655f, 5f);
             Player Samuri = new Player("Samuri",90f, 1, 635f, 30f);
            
-            Enemy e1 = new Enemy("e1",70f, 1, 15f, 9f);
-            Enemy e2 = new Enemy("e2",100f, 1, 10f, 2f);
-            Enemy e3 = new Enemy("e3",65f, 1, 10f, 25f);
+            Enemy e1 = new Enemy("e1",70f, 1, 20f, 9f);
+            Enemy e2 = new Enemy("e2",100f, 1, 20f, 2f);
+            Enemy e3 = new Enemy("e3",65f, 1, 20f, 25f);
             Combat.Instance.AddPlayer(Knight);
             Combat.Instance.AddPlayer(Viking);
             Combat.Instance.AddPlayer(Samuri);

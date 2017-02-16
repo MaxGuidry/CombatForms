@@ -32,6 +32,7 @@
             this.Armor = new System.Windows.Forms.Button();
             this.Damage = new System.Windows.Forms.Button();
             this.Speed = new System.Windows.Forms.Button();
+            this.Health = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // textBox1
@@ -40,12 +41,12 @@
             this.textBox1.Name = "textBox1";
             this.textBox1.Size = new System.Drawing.Size(191, 20);
             this.textBox1.TabIndex = 0;
-            this.textBox1.Text = "Pick a stat to increase by 10%";
+            this.textBox1.Text = "Pick a stat to boost";
             this.textBox1.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // Armor
             // 
-            this.Armor.Location = new System.Drawing.Point(55, 162);
+            this.Armor.Location = new System.Drawing.Point(55, 114);
             this.Armor.Name = "Armor";
             this.Armor.Size = new System.Drawing.Size(160, 70);
             this.Armor.TabIndex = 1;
@@ -55,7 +56,7 @@
             // 
             // Damage
             // 
-            this.Damage.Location = new System.Drawing.Point(55, 70);
+            this.Damage.Location = new System.Drawing.Point(55, 38);
             this.Damage.Name = "Damage";
             this.Damage.Size = new System.Drawing.Size(160, 70);
             this.Damage.TabIndex = 2;
@@ -65,7 +66,7 @@
             // 
             // Speed
             // 
-            this.Speed.Location = new System.Drawing.Point(55, 258);
+            this.Speed.Location = new System.Drawing.Point(55, 190);
             this.Speed.Name = "Speed";
             this.Speed.Size = new System.Drawing.Size(160, 70);
             this.Speed.TabIndex = 3;
@@ -73,11 +74,22 @@
             this.Speed.UseVisualStyleBackColor = true;
             this.Speed.Click += new System.EventHandler(this.Speed_Click);
             // 
+            // Health
+            // 
+            this.Health.Location = new System.Drawing.Point(55, 266);
+            this.Health.Name = "Health";
+            this.Health.Size = new System.Drawing.Size(160, 70);
+            this.Health.TabIndex = 4;
+            this.Health.Text = "Health";
+            this.Health.UseVisualStyleBackColor = true;
+            this.Health.Click += new System.EventHandler(this.Health_Click);
+            // 
             // StatBuff
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(263, 377);
+            this.Controls.Add(this.Health);
             this.Controls.Add(this.Speed);
             this.Controls.Add(this.Damage);
             this.Controls.Add(this.Armor);
@@ -96,5 +108,6 @@
         private System.Windows.Forms.Button Armor;
         private System.Windows.Forms.Button Damage;
         private System.Windows.Forms.Button Speed;
+        private System.Windows.Forms.Button Health;
     }
 }

@@ -62,6 +62,7 @@ namespace CombatForms.Classes
         
         protected float m_Health;
         protected float m_MaxHealth;
+        protected int m_Level;
         protected float m_Speed;
         protected float m_Damage;
         protected int m_NumberOfTurns;
@@ -72,6 +73,7 @@ namespace CombatForms.Classes
         protected System.Windows.Forms.Control m_Button;
         protected System.Windows.Forms.ProgressBar m_HealthBar;
         protected System.Windows.Forms.RichTextBox m_Info;
+        protected System.Windows.Forms.RichTextBox m_State;
         public float Damage { get { return m_Damage; } set { m_Damage = value; } }
         public float Health { get { return m_Health; } set { m_Health = value; } }
 
@@ -83,7 +85,9 @@ namespace CombatForms.Classes
         public System.Windows.Forms.ProgressBar HealthBar { get { return m_HealthBar; } set { m_HealthBar = value; } }
         public bool Alive { get { return m_Alive; } set { m_Alive = value; } }
         public float MaxHealth { get { return m_MaxHealth; } set { m_MaxHealth = value; } }
+        public int Level { get { return m_Level; }set { m_Level = value; } }
         public float Armor { get { return m_Armor; }set { m_Armor = value; } }
         public System.Windows.Forms.RichTextBox Info { get { return m_Info; }set { m_Info = value; } }
+        public System.Windows.Forms.RichTextBox StateBox { get { return m_State; } set { m_State = value; } }
     }
 }

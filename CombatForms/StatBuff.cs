@@ -27,24 +27,36 @@ namespace CombatForms
         {
             Combat.Instance.currentPlayer.Damage += Combat.Instance.currentPlayer.Damage * .20f;
             this.Close();
-            Combat.Instance.a.Visible = true;
+            Combat.Instance.a.Enabled = true;
             Combat.Instance.NextPlayer();
+            Combat.Instance.a.UpdateCombatUI();
         }
 
         private void Armor_Click(object sender, EventArgs e)
         {
             Combat.Instance.currentPlayer.Armor += Combat.Instance.currentPlayer.Armor * .20f;
             this.Close();
-            Combat.Instance.a.Visible = true;
+            Combat.Instance.a.Enabled = true;
             Combat.Instance.NextPlayer();
+            Combat.Instance.a.UpdateCombatUI();
         }
 
         private void Speed_Click(object sender, EventArgs e)
         {
             Combat.Instance.currentPlayer.Speed += Combat.Instance.currentPlayer.Speed * .20f;
             this.Close();
-            Combat.Instance.a.Visible = true;
+            Combat.Instance.a.Enabled = true;
             Combat.Instance.NextPlayer();
+            Combat.Instance.a.UpdateCombatUI();
+        }
+
+        private void Health_Click(object sender, EventArgs e)
+        {
+            Combat.Instance.currentPlayer.Health += Combat.Instance.currentPlayer.Health * .20f;
+            this.Close();
+            Combat.Instance.a.Enabled = true;
+            Combat.Instance.NextPlayer();
+            Combat.Instance.a.UpdateCombatUI();
         }
     }
 }
