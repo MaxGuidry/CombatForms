@@ -53,8 +53,8 @@ namespace CombatForms
                     Combat.Instance.NextPlayer();
                 }
             }
-           Combat.Instance.UpdateUI();
-         
+            Combat.Instance.UpdateUI();
+
         }
 
 
@@ -90,7 +90,8 @@ namespace CombatForms
         {
             pictureBox2.SendToBack();
             pictureBox2.Visible = true;
-            pictureBox2.Location = new Point(Combat.Instance.target.PlayerButton.Location.X - 183, Combat.Instance.target.PlayerButton.Location.Y-75);
+            if (Combat.Instance.target != null)
+                pictureBox2.Location = new Point(Combat.Instance.target.PlayerButton.Location.X - 183, Combat.Instance.target.PlayerButton.Location.Y - 75);
             Combat.Instance.currentPlayer.ChangePlayerState("ATTACK");
             UpdateCombatUI();
         }
@@ -102,7 +103,7 @@ namespace CombatForms
 
         private void EndTurn_Click(object sender, EventArgs e)
         {
-            
+
             Combat.Instance.Update();
             pictureBox2.Visible = false;
             pictureBox1.Location = new Point(Combat.Instance.currentPlayer.PlayerButton.Location.X + 150, Combat.Instance.currentPlayer.PlayerButton.Location.Y - 75);
@@ -114,7 +115,7 @@ namespace CombatForms
 
         private void Form1_MouseDown(object sender, MouseEventArgs e)
         {
-           
+
         }
 
         private void pictureBox1_Click(object sender, EventArgs e)
