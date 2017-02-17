@@ -25,39 +25,39 @@ namespace CombatForms
 
         private void Damage_Click(object sender, EventArgs e)
         {
-            Combat.Instance.currentPlayer.Damage += Combat.Instance.currentPlayer.Damage * .20f;
+            Combat.Instance.CurrentPlayer.Damage += Combat.Instance.CurrentPlayer.Damage * .20f;
             this.Close();
-            Combat.Instance.a.Enabled = true;
+            Combat.Instance.form1.Enabled = true;
             Combat.Instance.NextPlayer();
-            Combat.Instance.a.UpdateCombatUI();
-            Combat.Instance.a.Show();
+            Combat.Instance.form1.UpdateCombatUI();
+            Combat.Instance.form1.Show();
         }
 
         private void Armor_Click(object sender, EventArgs e)
         {
-            Combat.Instance.currentPlayer.Armor += Combat.Instance.currentPlayer.Armor * .20f;
+            Combat.Instance.CurrentPlayer.Armor += Combat.Instance.CurrentPlayer.Armor * .20f;
             this.Close();
-            Combat.Instance.a.Enabled = true;
+            Combat.Instance.form1.Enabled = true;
             Combat.Instance.NextPlayer();
-            Combat.Instance.a.UpdateCombatUI();
+            Combat.Instance.form1.UpdateCombatUI();
         }
 
         private void Speed_Click(object sender, EventArgs e)
         {
-            Combat.Instance.currentPlayer.Speed += Combat.Instance.currentPlayer.Speed * .20f;
+            Combat.Instance.CurrentPlayer.Speed += Combat.Instance.CurrentPlayer.Speed * .20f;
             this.Close();
-            Combat.Instance.a.Enabled = true;
+            Combat.Instance.form1.Enabled = true;
             Combat.Instance.NextPlayer();
-            Combat.Instance.a.UpdateCombatUI();
+            Combat.Instance.form1.UpdateCombatUI();
         }
 
         private void Health_Click(object sender, EventArgs e)
         {
-            Combat.Instance.currentPlayer.Health += Combat.Instance.currentPlayer.Health * .20f;
+            Combat.Instance.CurrentPlayer.Health += Combat.Instance.CurrentPlayer.Health * .20f;
             this.Close();
-            Combat.Instance.a.Enabled = true;
+            Combat.Instance.form1.Enabled = true;
             Combat.Instance.NextPlayer();
-            Combat.Instance.a.UpdateCombatUI();
+            Combat.Instance.form1.UpdateCombatUI();
         }
     }
 }

@@ -20,6 +20,7 @@ namespace CombatForms.Classes
             m_ExpToNextLevel = 100f;
             m_Alive = true;
             m_Level = 1;
+            m_Type = EntityType.PLAYER;
 
         }
 
@@ -34,6 +35,7 @@ namespace CombatForms.Classes
             m_MaxHealth = health;
             m_Damage = baseDamage;
             m_Speed = speed;
+            m_Type = EntityType.PLAYER;
 
         }
         public override void DealDamage(IDamagable target, float Amount)
@@ -45,7 +47,7 @@ namespace CombatForms.Classes
 
         public override void TakeDamage(float Amount)
         {
-            if (CurrentState().ToString() == "DEFEND")
+            if (CurrentState.ToString() == "DEFEND")
                 Amount -= m_Armor;
             if (m_Health - Amount < 0)
             {
@@ -60,7 +62,7 @@ namespace CombatForms.Classes
             (HealthBar as ProgressBar).Value = (int)((m_Health/m_MaxHealth)*100f);
         }
 
-
+        public Action OnLevelUp;
 
         private void LevelUp()
         {
@@ -71,7 +73,8 @@ namespace CombatForms.Classes
             StatBuff t = new StatBuff();
             t.Visible = true;
             t.Activate();
-            Combat.Instance.a.Enabled = false;
+            OnLevelUp.Invoke();
+            
 
         }
         public void GainEXP(IDamagable target)

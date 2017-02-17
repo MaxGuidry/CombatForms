@@ -8,6 +8,11 @@ namespace CombatForms.Classes
 {
     public class Entity : IDamagable, IDamager
     {
+        public enum EntityType
+        {
+            PLAYER,
+            ENEMY,
+        }
         public Entity()
         {
             controller = new FSM<EntityState>();
@@ -18,11 +23,16 @@ namespace CombatForms.Classes
             controller.AddTransition(EntityState.DEFEND, EntityState.ATTACK);
             controller.Start(EntityState.WAIT);
             m_Armor = 10f;
-           
+
         }
         public void Start()
         {
 
+        }
+        protected EntityType m_Type;
+        public EntityType Type
+        {
+            get { return m_Type; }
         }
         public delegate void Handler();
         public Handler onDeath;
@@ -34,14 +44,15 @@ namespace CombatForms.Classes
             ATTACK,
             DEFEND,
         }
-        public State CurrentState()
+        public State CurrentState
         {
-            return controller.GetState();
+            get { return controller.GetState(); }
+
         }
 
         public virtual void TakeDamage(float Amount)
         {
-              
+
         }
 
         public virtual void DealDamage(IDamagable target, float Amount)
@@ -50,16 +61,16 @@ namespace CombatForms.Classes
         }
         public void ChangePlayerState(string state)
         {
-            foreach (EntityState ps in Enum.GetValues(typeof(EntityState)))
+            foreach(EntityState ps in Enum.GetValues(typeof(EntityState)))
             {
-                if (state == ps.ToString())
+                if(state == ps.ToString())
                 {
                     controller.ChangeState(ps);
                     break;
                 }
             }
         }
-        
+
         protected float m_Health;
         protected float m_MaxHealth;
         protected int m_Level;
@@ -85,9 +96,9 @@ namespace CombatForms.Classes
         public System.Windows.Forms.ProgressBar HealthBar { get { return m_HealthBar; } set { m_HealthBar = value; } }
         public bool Alive { get { return m_Alive; } set { m_Alive = value; } }
         public float MaxHealth { get { return m_MaxHealth; } set { m_MaxHealth = value; } }
-        public int Level { get { return m_Level; }set { m_Level = value; } }
-        public float Armor { get { return m_Armor; }set { m_Armor = value; } }
-        public System.Windows.Forms.RichTextBox Info { get { return m_Info; }set { m_Info = value; } }
+        public int Level { get { return m_Level; } set { m_Level = value; } }
+        public float Armor { get { return m_Armor; } set { m_Armor = value; } }
+        public System.Windows.Forms.RichTextBox Info { get { return m_Info; } set { m_Info = value; } }
         public System.Windows.Forms.RichTextBox StateBox { get { return m_State; } set { m_State = value; } }
     }
 }

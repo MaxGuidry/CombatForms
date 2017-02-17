@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace CombatForms.Classes
 {
-   public class State
+    public class State
     {
         public State(Enum e)
         {
@@ -27,18 +27,18 @@ namespace CombatForms.Classes
         {
             onUpdate += wa as Handler;
         }
-        static public bool operator ==(State current,State other )
+        static public bool operator ==(State current, State other)
         {
-            if (current.Name == other.Name && current.onEnd == other.onEnd && current.onStart == other.onStart && current.onUpdate == other.onUpdate)
+            if(current.Name == other.Name && current.onEnd == other.onEnd && current.onStart == other.onStart && current.onUpdate == other.onUpdate)
                 return true;
             return false;
         }
-        static public bool operator !=(State current,State other)
+        static public bool operator !=(State current, State other)
         {
-            if (current.Name == other.Name && current.onEnd == other.onEnd && current.onStart == other.onStart && current.onUpdate == other.onUpdate)
+            if(current.Name == other.Name && current.onEnd == other.onEnd && current.onStart == other.onStart && current.onUpdate == other.onUpdate)
                 return false;
             return true;
-           
+
         }
         public override string ToString()
         {

@@ -21,6 +21,7 @@ namespace CombatForms.Classes
             m_Health = 50f;
             m_MaxHealth = m_Health;
             m_Speed = 5f;
+            m_Type = EntityType.ENEMY;
         }
 
         public Enemy(string name,float health, int level, float baseDamage, float speed)
@@ -33,6 +34,7 @@ namespace CombatForms.Classes
             m_MaxHealth = health;
             m_Name = name;
             m_Speed = speed;
+            m_Type = EntityType.ENEMY;
         }
         public override void DealDamage(IDamagable target, float Amount)
         {
@@ -42,7 +44,7 @@ namespace CombatForms.Classes
 
         public override void TakeDamage(float Amount)
         {
-            if (CurrentState().ToString() == "DEFEND")
+            if (CurrentState.ToString() == "DEFEND")
                 Amount -= m_Armor;
             if (m_Health - Amount <= 0)
             {
@@ -62,9 +64,9 @@ namespace CombatForms.Classes
             Random r = new Random();
             int chance = r.Next(1, 5);
             if (chance < 4)
-                Combat.Instance.currentPlayer.ChangePlayerState("ATTACK");
+                Combat.Instance.CurrentPlayer.ChangePlayerState("ATTACK");
             else if (chance == 4)
-                Combat.Instance.currentPlayer.ChangePlayerState("DEFEND");
+                Combat.Instance.CurrentPlayer.ChangePlayerState("DEFEND");
         }
 
 
