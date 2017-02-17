@@ -8,9 +8,11 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using CombatForms.Iterfaces;
+using System.Xml.Serialization;
 
 namespace CombatForms.Classes
 {
+    [Serializable]
     public class Player : Entity
     {
 
@@ -53,15 +55,15 @@ namespace CombatForms.Classes
             if (m_Health - Amount < 0)
             {
                 m_Health = 0;
-                (HealthBar as ProgressBar).Value = (int)((m_Health / m_MaxHealth) * 100f);
-                m_Info = null;
+               
+                
                 this.onDeath.Invoke();
                 return;
             }
             m_Health -= Amount;
-            (HealthBar as ProgressBar).Value = (int)((m_Health/m_MaxHealth)*100f);
+            
         }
-
+        [XmlIgnore]
         public Action OnLevelUp;
 
         private void LevelUp()
@@ -73,8 +75,8 @@ namespace CombatForms.Classes
             t.Activate();
             OnLevelUp.Invoke();
             m_Health = m_MaxHealth;
-            (m_HealthBar as ProgressBar).Value = (int)((m_Health / m_MaxHealth) * 100f);
         }
+          
         public void GainEXP(IDamagable target)
         {
             m_Exp += (float)(8f * (float)(Math.Pow((double)(target as Enemy).Level, 1.5d)) + 50f);

@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using System.Xml.Serialization;
 
 namespace CombatForms.Classes
 {
+    [Serializable]
     public class Combat
     {
 
@@ -69,7 +70,9 @@ namespace CombatForms.Classes
 
 
         public delegate void GenerateEnemy(Enemy e);
+        [XmlIgnore]
         public GenerateEnemy OnEnemyGeneration { get; set; }
+
         public void GenerateNewEnemy(Enemy dead)
         {
             Entities.Remove(Target);
@@ -87,6 +90,7 @@ namespace CombatForms.Classes
             SortEntities();
         }
         public delegate void Targeting(Object obj, EventArgs evt);
+        [XmlIgnore]
         public Targeting getTarget;
 
         public void UpdateCombat()
@@ -113,6 +117,7 @@ namespace CombatForms.Classes
             Combat.Instance.Target = null;
 
         }
+        [XmlIgnore]
         public Action OnDeath { get; set; }
         private void OnPlayerDeath()
         {
@@ -121,9 +126,9 @@ namespace CombatForms.Classes
                 Entities.Remove(Target);
                 return;
             }
-            OnDeath();
+            
             GenerateNewEnemy(Target as Enemy);
-
+            
 
             SortEntities();
         }

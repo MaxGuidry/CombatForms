@@ -23,7 +23,7 @@ namespace CombatForms
                 this.Controls.Add(c);
             }
             Combat.Instance.Start();
-            Combat.Instance.OnDeath += RemoveDeadInfo;
+
             Combat.Instance.OnEnemyGeneration += GenerateEnemyControls;
             Combat.Instance.getTarget += GetTarget;
             foreach (var e in Combat.Instance.Entities)
@@ -34,26 +34,50 @@ namespace CombatForms
                     (e as Player).OnLevelUp += delegate { Combat.Instance.ChangeCombatState("LEVELING"); };
                 }
             }
-            pictureBox1.Location = new Point(Combat.Instance.CurrentPlayer.PlayerButton.Location.X + 150, Combat.Instance.CurrentPlayer.PlayerButton.Location.Y - 75);
+            pictureBox1.Location = new Point(Controls[Combat.Instance.CurrentPlayer.Name + "targetButton"].Location.X + 150, Controls[Combat.Instance.CurrentPlayer.Name + "targetButton"].Location.Y - 75);
             pictureBox2.Visible = false;
             PlayerHealth.Value = (int)((Combat.Instance.CurrentPlayer.Health / Combat.Instance.CurrentPlayer.MaxHealth) * 100f);
         }
 
         public void GenerateEnemyControls(Enemy e)
         {
-            Combat.Instance.Target.Info = e.Info;
-            Combat.Instance.Target.PlayerButton = e.PlayerButton;
-            Combat.Instance.Target.PlayerButton.Text = Combat.Instance.Target.Name;
-            Combat.Instance.Target.HealthBar = e.HealthBar;
 
-            Combat.Instance.Target.HealthBar = new ProgressBar();
-            Combat.Instance.Target.HealthBar.Location = new System.Drawing.Point(715, e.PlayerButton.Location.Y + e.PlayerButton.Size.Height);
-            Combat.Instance.Target.HealthBar.Value = (int)((Combat.Instance.Target.Health / Combat.Instance.Target.MaxHealth) * 100f);
-            Combat.Instance.Target.Info = new RichTextBox();
-            Combat.Instance.Target.Info.Location = new System.Drawing.Point(700, Combat.Instance.Target.HealthBar.Location.Y + Combat.Instance.Target.HealthBar.Size.Height);
-            Combat.Instance.Target.Info.Text = "Health: " + Combat.Instance.Target.Health + "\nDamage: " + Combat.Instance.Target.Damage +
+            RichTextBox state = new RichTextBox();
+            RichTextBox info = new RichTextBox();
+            ProgressBar health = new ProgressBar();
+            Button targetButton = new Button();
+
+            state.Name = e.Name + "state";
+            info.Name = e.Name + "info";
+            health.Name = e.Name + "health";
+            targetButton.Name = e.Name + "targetButton";
+
+            health = Controls[e.Name + "health"] as ProgressBar;
+            targetButton.Text = e.Name;
+            health = new ProgressBar();
+            health.Location = new System.Drawing.Point(715, Controls[e.Name + "targetButton"].Location.Y + Controls[e.Name + "targetButton"].Size.Height);
+            health.Value = (int)((Combat.Instance.Target.Health / Combat.Instance.Target.MaxHealth) * 100f);
+
+
+            info = Controls[e.Name + "info"] as RichTextBox;
+            info.Location = new System.Drawing.Point(700, Controls[e.Name + "health"].Location.Y + Controls[e.Name + "health"].Size.Height);
+            info.Text = "Health: " + Combat.Instance.Target.Health + "\nDamage: " + Combat.Instance.Target.Damage +
                         "\nSpeed: " + Combat.Instance.Target.Speed + "\nArmor: " + Combat.Instance.Target.Armor;
-            UpdateAllUI();
+
+            targetButton = Controls[e.Name + "targetButton"] as Button;
+
+            Controls.RemoveByKey(Combat.Instance.Target.Name + "state");
+            Controls.RemoveByKey(Combat.Instance.Target.Name + "info");
+            Controls.RemoveByKey(Combat.Instance.Target.Name + "health");
+            Controls.RemoveByKey(Combat.Instance.Target.Name + "targetButton");
+
+            Controls.Add(state);
+            Controls.Add(health);
+            Controls.Add(info);
+            Controls.Add(targetButton);
+
+
+
         }
 
         public void UpdateAllUI()
@@ -67,11 +91,7 @@ namespace CombatForms
             UpdateCombatUI();
         }
 
-        public void RemoveDeadInfo()
-        {
-            Controls.Remove(Combat.Instance.Target.Info);
-            Controls.Remove(Combat.Instance.Target.HealthBar);
-        }
+
 
         public void TestEnemyCombat()
         {
@@ -86,57 +106,70 @@ namespace CombatForms
             List<Control> tmp = new List<Control>();
             foreach (Entity e in Combat.Instance.Entities)
             {
-                e.StateBox = new RichTextBox();
-                e.Info = new RichTextBox();
-                e.HealthBar = new ProgressBar();
-                e.HealthBar.Size = new System.Drawing.Size(100, 25);
-                e.PlayerButton = new Button();
-                e.PlayerButton.Size = new Size(150, 50);
+
+                //e.StateBox = new RichTextBox();
+                //e.Info = new RichTextBox();
+                //e.HealthBar = new ProgressBar();
+                // e.PlayerButton = new Button();
+
+                RichTextBox state = new RichTextBox();
+                RichTextBox info = new RichTextBox();
+                ProgressBar health = new ProgressBar();
+                Button targetButton = new Button();
+
+                state.Name = e.Name + "state";
+                info.Name = e.Name + "info";
+                health.Name = e.Name + "health";
+                targetButton.Name = e.Name + "targetButton";
+
+                health.Size = new System.Drawing.Size(100, 25);
+
+                targetButton.Size = new Size(150, 50);
                 if (typeof(Player).ToString() == e.ToString())
                 {
-                    e.PlayerButton.Location = new System.Drawing.Point(110, 150 * i);
-                    e.PlayerButton.Text = e.Name;
+                    targetButton.Location = new System.Drawing.Point(110, 150 * i);
+                    targetButton.Text = e.Name;
 
-                    e.HealthBar.Location = new System.Drawing.Point(135, e.PlayerButton.Location.Y + e.PlayerButton.Size.Height);
+                    health.Location = new System.Drawing.Point(135, targetButton.Location.Y + targetButton.Size.Height);
 
-                    (e.HealthBar as ProgressBar).Value = (int)((e.Health / e.MaxHealth) * 100f);
+                    (health as ProgressBar).Value = (int)((e.Health / e.MaxHealth) * 100f);
 
-                    e.Info.Location = new System.Drawing.Point(135, e.HealthBar.Location.Y + e.HealthBar.Size.Height);
-                    (e.Info as RichTextBox).Text = "Health: " + e.Health + "\nDamage: " + e.Damage +
+                    info.Location = new System.Drawing.Point(135, health.Location.Y + health.Size.Height);
+                    (info as RichTextBox).Text = "Health: " + e.Health + "\nDamage: " + e.Damage +
                         "\nSpeed: " + e.Speed + "\nArmor: " + e.Armor + "\nLevel: " + e.Level;
-                    e.StateBox.Location = new System.Drawing.Point(265, e.PlayerButton.Location.Y);
-                    e.StateBox.Size = new System.Drawing.Size(150, 30);
-                    (e.StateBox as RichTextBox).Text = "Current State: " + e.CurrentState.ToString();
+                    state.Location = new System.Drawing.Point(265, targetButton.Location.Y);
+                    state.Size = new System.Drawing.Size(150, 30);
+                    (state as RichTextBox).Text = "Current State: " + e.CurrentState.ToString();
                     i++;
                 }
                 if (typeof(Enemy).ToString() == e.ToString())
                 {
-                    e.PlayerButton.Location = new System.Drawing.Point(690, 150 * j);
-                    e.HealthBar.Location = new System.Drawing.Point(715, e.PlayerButton.Location.Y + e.PlayerButton.Size.Height);
-                    (e.HealthBar as ProgressBar).Value = (int)((e.Health / e.MaxHealth) * 100f);
+                    targetButton.Location = new System.Drawing.Point(690, 150 * j);
+                    health.Location = new System.Drawing.Point(715, targetButton.Location.Y + targetButton.Size.Height);
+                    (health as ProgressBar).Value = (int)((e.Health / e.MaxHealth) * 100f);
 
-                    e.PlayerButton.Text = e.Name;
+                    targetButton.Text = e.Name;
 
 
-                    e.Info.Location = new System.Drawing.Point(715, e.HealthBar.Location.Y + e.HealthBar.Size.Height);
-                    (e.Info as RichTextBox).Text = "Health: " + e.Health + "\nDamage: " + e.Damage +
+                    info.Location = new System.Drawing.Point(715, health.Location.Y + health.Size.Height);
+                    (info as RichTextBox).Text = "Health: " + e.Health + "\nDamage: " + e.Damage +
                          "\nSpeed: " + e.Speed + "\nArmor: " + e.Armor + "\nLevel: " + e.Level;
-                    e.StateBox.Location = new System.Drawing.Point(845, e.PlayerButton.Location.Y);
-                    e.StateBox.Size = new System.Drawing.Size(150, 30);
-                    (e.StateBox as RichTextBox).Text = "Current State: " + e.CurrentState.ToString();
+                    state.Location = new System.Drawing.Point(845, targetButton.Location.Y);
+                    state.Size = new System.Drawing.Size(150, 30);
+                    (state as RichTextBox).Text = "Current State: " + e.CurrentState.ToString();
                     j++;
                 }
 
 
-                e.PlayerButton.Click += GetTarget;
-                e.PlayerButton.Click += SetTarget;
+                targetButton.Click += GetTarget;
+                targetButton.Click += SetTarget;
 
-                e.Info.Size = new System.Drawing.Size(100, 75);
+                info.Size = new System.Drawing.Size(100, 75);
 
-                tmp.Add(e.PlayerButton);
-                tmp.Add(e.StateBox);
-                tmp.Add(e.Info);
-                tmp.Add(e.HealthBar);
+                tmp.Add(targetButton);
+                tmp.Add(state);
+                tmp.Add(info);
+                tmp.Add(health);
 
             }
 
@@ -179,48 +212,96 @@ namespace CombatForms
 
         public void UpdateUI()
         {
-
-
             foreach (Entity e in Combat.Instance.Entities)
             {
 
                 if (typeof(Player).ToString() == e.ToString())
                 {
-                    if (e.Info == null)
-                    {
-                        e.Info = new RichTextBox();
 
-                        e.Info.Location = new System.Drawing.Point(135, e.HealthBar.Location.Y + e.HealthBar.Size.Height);
-                    }
-                    (e.Info).Text = "Health: " + e.Health + "\nDamage: " + e.Damage +
+
+                    Controls[e.Name + "info"].Location = new System.Drawing.Point(135, Controls[e.Name + "health"].Location.Y + Controls[e.Name + "health"].Size.Height);
+
+                    Controls[e.Name + "info"].Text = "Health: " + e.Health + "\nDamage: " + e.Damage +
                         "\nSpeed: " + e.Speed + "\nArmor: " + e.Armor + "\nLevel: " + e.Level;
-                    e.StateBox.Text = "Current State: " + e.CurrentState.ToString();
+                    Controls[e.Name + "state"].Text = "Current State: " + e.CurrentState.ToString();
 
                 }
+
+
+
+
+
+
+
+                //    if (Controls.ContainsKey(e.Name + "state"))
+                //    {
+
+
+
+
+                //        Controls[e.Name + "info"].Location = new System.Drawing.Point(135, e.HealthBar.Location.Y + e.HealthBar.Size.Height);
+
+                //        Controls[e.Name + "info"].Text = "Health: " + e.Health + "\nDamage: " + e.Damage +
+                //            "\nSpeed: " + e.Speed + "\nArmor: " + e.Armor + "\nLevel: " + e.Level;
+                //        e.StateBox.Text = "Current State: " + e.CurrentState.ToString();
+                //    }
+                //    else
+                //    {
+                //        RichTextBox state = new RichTextBox();
+                //        RichTextBox info = new RichTextBox();
+                //        ProgressBar health = new ProgressBar();
+                //        Button targetButton = new Button();
+                //        state.Name = e.Name + "state";
+                //        info.Name = e.Name + "info";
+                //        health.Name = e.Name + "health";
+                //        targetButton.Name = e.Name + "targetButton";
+                //    }
+                //}
+
+
+
+
+
+
+
+
+
+
 
                 if (typeof(Enemy).ToString() == e.ToString())
                 {
 
-                    if (this.Controls.Contains(e.Info) == false)
+                    if (!this.Controls.ContainsKey(e.Name + "info"))
                     {
-                        e.StateBox = new RichTextBox();
-                        e.StateBox.Location = new System.Drawing.Point(845, Combat.Instance.CurrentPlayer.PlayerButton.Location.Y);
-                        e.StateBox.Size = new System.Drawing.Size(150, 30);
-                        e.Info.Location = new System.Drawing.Point(715, e.HealthBar.Location.Y + e.HealthBar.Size.Height);
+                        RichTextBox state = new RichTextBox();
+                        RichTextBox info = new RichTextBox();
+                        ProgressBar health = new ProgressBar();
+                        Button targetButton = new Button();
 
-                        this.Controls.Add(e.Info);
-                        this.Controls.Add(e.StateBox);
-                        this.Controls.Add(e.HealthBar);
+                        state.Name = e.Name + "state";
+                        info.Name = e.Name + "info";
+                        health.Name = e.Name + "health";
+                        targetButton.Name = e.Name + "targetButton";
+
+
+
+                        state.Location = new System.Drawing.Point(845, Controls[e.Name + "targetButton"].Location.Y);
+                        state.Size = new System.Drawing.Size(150, 30);
+                        info.Location = new System.Drawing.Point(715, Controls[e.Name + "health"].Location.Y + Controls[e.Name + "health"].Size.Height);
+
+                        this.Controls.Add(info);
+                        this.Controls.Add(state);
+                        this.Controls.Add(health);
                     }
 
-                    (e.Info).Text = (e.Info as RichTextBox).Text = "Health: " + e.Health + "\nDamage: " + e.Damage +
+                    Controls[e.Name + "info"].Text = (Controls[e.Name + "info"]).Text = "Health: " + e.Health + "\nDamage: " + e.Damage +
                         "\nSpeed: " + e.Speed + "\nArmor: " + e.Armor + "\nLevel: " + e.Level;
-                    e.StateBox.Text = "Current State: " + e.CurrentState.ToString();
+                    Controls[e.Name + "state"].Text = "Current State: " + e.CurrentState.ToString();
                 }
             }
         }
         public void UpdateCombatUI()
-        {//just get the name of the button at runtime
+        {
 
 
             StatBuff.form1 = this;
@@ -234,13 +315,10 @@ namespace CombatForms
             if (Combat.Instance.CurrentPlayer.ToString() == typeof(Enemy).ToString())
             {
 
-                Entity e = Combat.Instance.CurrentPlayer;
-                Combat.Instance.CurrentPlayer.PlayerButton.Enabled = false;
-                Combat.Instance.NextPlayer();
-                while (Combat.Instance.CurrentPlayer != e)
+
+                foreach (Entity en in Combat.Instance.Entities)
                 {
-                    Combat.Instance.CurrentPlayer.PlayerButton.Enabled = false;
-                    Combat.Instance.NextPlayer();
+                    Controls[en.Name + "targetButton"].Enabled = false;
 
                 }
                 button1.Enabled = false;
@@ -250,29 +328,19 @@ namespace CombatForms
             {
                 button1.Enabled = true;
                 button2.Enabled = true;
-                Entity e = Combat.Instance.CurrentPlayer;
-                Combat.Instance.CurrentPlayer.PlayerButton.Enabled = true;
-                Combat.Instance.NextPlayer();
-                while (Combat.Instance.CurrentPlayer != e)
+
+
+
+                foreach (Entity en in Combat.Instance.Entities)
                 {
-                    Combat.Instance.CurrentPlayer.PlayerButton.Enabled = true;
-                    Combat.Instance.NextPlayer();
+                    Controls[en.Name + "targetButton"].Enabled = true;
+
                 }
             }
             pictureBox1.SendToBack();
-            pictureBox1.Location = new Point(Combat.Instance.CurrentPlayer.PlayerButton.Location.X + 150, Combat.Instance.CurrentPlayer.PlayerButton.Location.Y - 75);
+            pictureBox1.Location = new Point(Controls[Combat.Instance.CurrentPlayer.Name + "targetButton"].Location.X + 150, Controls[Combat.Instance.CurrentPlayer.Name + "targetButton"].Location.Y - 75);
 
-            //foreach(Control c in Controls)
-            //{
-            //    Button b = c as Button;
-            //    if(b != null)
-            //    {
-            //        if(b.Text == Combat.Instance.CurrentPlayer.Name)
-            //        {
-            //            b.Enabled = false;
-            //        }
-            //    }
-            //}
+
 
 
         }
@@ -288,7 +356,7 @@ namespace CombatForms
         {
             if (Combat.Instance.Target != null)
             {
-                pictureBox2.Location = new Point(Combat.Instance.Target.PlayerButton.Location.X - 183, Combat.Instance.Target.PlayerButton.Location.Y - 75);
+                pictureBox2.Location = new Point(Controls[Combat.Instance.Target.Name + "targetButton"].Location.X - 183, Controls[Combat.Instance.Target.Name + "targetButton"].Location.Y - 75);
                 pictureBox2.SendToBack();
                 pictureBox2.Visible = true;
             }
@@ -315,6 +383,26 @@ namespace CombatForms
         private void pictureBox1_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void button5_Click(object sender, EventArgs e)
+        {
+            Combat.Instance.CurrentPlayer = DataSerializer<Entity>.Deserialize("Current Player");
+            Combat.Instance.Entities = DataSerializer<List<Entity>>.Deserialize("All PLayers");
+            Control.ControlCollection c = DataSerializer<Control.ControlCollection>.Deserialize("Controls");
+            this.Controls.Clear();
+            foreach(Control ctrl in c)
+            {
+                this.Controls.Add(ctrl);
+            }
+            UpdateAllUI();
+        }
+
+        private void Save_Click(object sender, EventArgs e)
+        {
+            DataSerializer<Entity>.Serialize("Current Player", Combat.Instance.CurrentPlayer as Entity);
+            DataSerializer<List<Entity>>.Serialize("All Players", Combat.Instance.Entities);
+            DataSerializer<Control.ControlCollection>.Serialize("Controls", this.Controls);
         }
     }
 }

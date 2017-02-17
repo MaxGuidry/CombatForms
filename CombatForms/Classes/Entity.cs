@@ -4,8 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using CombatForms.Iterfaces;
+using System.Xml.Serialization;
 namespace CombatForms.Classes
 {
+    [Serializable]
+    [XmlInclude(typeof(Player))]
+    [XmlInclude(typeof(Enemy))]
     public class Entity : IDamagable, IDamager
     {
         public enum EntityType
@@ -27,13 +31,14 @@ namespace CombatForms.Classes
             m_Armor = 10f;
 
         }
-      
+
         protected EntityType m_Type;
         public EntityType Type
         {
             get { return m_Type; }
         }
         public delegate void Handler();
+        [XmlIgnore]
         public Handler onDeath;
         public FSM<EntityState> controller;
         public enum EntityState
@@ -60,9 +65,9 @@ namespace CombatForms.Classes
         }
         public void ChangePlayerState(string state)
         {
-            foreach(EntityState ps in Enum.GetValues(typeof(EntityState)))
+            foreach (EntityState ps in Enum.GetValues(typeof(EntityState)))
             {
-                if(state == ps.ToString())
+                if (state == ps.ToString())
                 {
                     controller.ChangeState(ps);
                     break;
@@ -71,7 +76,7 @@ namespace CombatForms.Classes
         }
 
 
-       
+
         protected float m_Health;
         protected float m_MaxHealth;
         protected int m_Level;
@@ -82,10 +87,7 @@ namespace CombatForms.Classes
         protected string m_Name;
         protected bool m_Alive;
         protected float m_Armor;
-        protected System.Windows.Forms.Control m_Button;
-        protected System.Windows.Forms.ProgressBar m_HealthBar;
-        protected System.Windows.Forms.RichTextBox m_Info;
-        protected System.Windows.Forms.RichTextBox m_State;
+
         public float Damage { get { return m_Damage; } set { m_Damage = value; } }
         public float Health { get { return m_Health; } set { m_Health = value; } }
 
@@ -93,13 +95,11 @@ namespace CombatForms.Classes
         public int NumberOfTurns { get { return m_NumberOfTurns; } set { m_NumberOfTurns = value; } }
         public int TurnsTaken { get { return m_TurnsTaken; } set { m_TurnsTaken = value; } }
         public string Name { get { return m_Name; } set { m_Name = value; } }
-        public System.Windows.Forms.Control PlayerButton { get { return m_Button; } set { m_Button = value; } }
-        public System.Windows.Forms.ProgressBar HealthBar { get { return m_HealthBar; } set { m_HealthBar = value; } }
+
         public bool Alive { get { return m_Alive; } set { m_Alive = value; } }
         public float MaxHealth { get { return m_MaxHealth; } set { m_MaxHealth = value; } }
         public int Level { get { return m_Level; } set { m_Level = value; } }
         public float Armor { get { return m_Armor; } set { m_Armor = value; } }
-        public System.Windows.Forms.RichTextBox Info { get { return m_Info; } set { m_Info = value; } }
-        public System.Windows.Forms.RichTextBox StateBox { get { return m_State; } set { m_State = value; } }
+
     }
 }

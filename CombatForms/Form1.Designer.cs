@@ -37,13 +37,15 @@
             this.richTextBox1 = new System.Windows.Forms.RichTextBox();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
+            this.Save = new System.Windows.Forms.Button();
+            this.Loader = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             this.SuspendLayout();
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(113, 669);
+            this.button1.Location = new System.Drawing.Point(412, 551);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(150, 60);
             this.button1.TabIndex = 0;
@@ -53,7 +55,7 @@
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(416, 669);
+            this.button2.Location = new System.Drawing.Point(412, 617);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(150, 60);
             this.button2.TabIndex = 1;
@@ -63,7 +65,7 @@
             // 
             // button3
             // 
-            this.button3.Location = new System.Drawing.Point(689, 669);
+            this.button3.Location = new System.Drawing.Point(412, 683);
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(150, 60);
             this.button3.TabIndex = 2;
@@ -118,11 +120,33 @@
             this.pictureBox2.TabIndex = 10;
             this.pictureBox2.TabStop = false;
             // 
+            // Save
+            // 
+            this.Save.Location = new System.Drawing.Point(199, 720);
+            this.Save.Name = "Save";
+            this.Save.Size = new System.Drawing.Size(75, 23);
+            this.Save.TabIndex = 11;
+            this.Save.Text = "Save";
+            this.Save.UseVisualStyleBackColor = true;
+            this.Save.Click += new System.EventHandler(this.Save_Click);
+            // 
+            // Loader
+            // 
+            this.Loader.Location = new System.Drawing.Point(694, 720);
+            this.Loader.Name = "Loader";
+            this.Loader.Size = new System.Drawing.Size(75, 23);
+            this.Loader.TabIndex = 12;
+            this.Loader.Text = "Load";
+            this.Loader.UseVisualStyleBackColor = true;
+            this.Loader.Click += new System.EventHandler(this.button5_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(970, 755);
+            this.Controls.Add(this.Loader);
+            this.Controls.Add(this.Save);
             this.Controls.Add(this.richTextBox1);
             this.Controls.Add(this.textBox1);
             this.Controls.Add(this.PlayerHealth);
@@ -152,6 +176,8 @@
         private System.Windows.Forms.RichTextBox richTextBox1;
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.PictureBox pictureBox2;
+        private System.Windows.Forms.Button Save;
+        private System.Windows.Forms.Button Loader;
     }
 }
 

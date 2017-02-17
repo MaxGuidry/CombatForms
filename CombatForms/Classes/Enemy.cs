@@ -7,6 +7,7 @@ using CombatForms.Iterfaces;
 using System.Windows.Forms;
 namespace CombatForms.Classes
 {
+    [Serializable]
     public class Enemy : Entity
     {
 
@@ -50,13 +51,13 @@ namespace CombatForms.Classes
             {
                 m_Health = 0;
                 m_Alive = false;
-                (HealthBar as ProgressBar).Value =(int)m_Health;
+                
                 
                 this.onDeath.Invoke();
                 return;
             }
             m_Health -= Amount;
-            (HealthBar as ProgressBar).Value = (int)((m_Health/m_MaxHealth)*100f);
+           
         }
 
         public void ChooseAction()
