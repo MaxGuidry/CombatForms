@@ -68,14 +68,6 @@ namespace CombatForms.Classes
             else if (chance == 4)
                 Combat.Instance.CurrentPlayer.ChangePlayerState("DEFEND");
         }
-
-
-
-      
-     
-      
-        
-
       
     }
 

@@ -12,6 +12,7 @@ namespace CombatForms
 {
     public partial class StatBuff : Form
     {
+        static public Form1 form1;
         public StatBuff()
         {
             InitializeComponent();
@@ -20,44 +21,51 @@ namespace CombatForms
 
         private void StatBuff_Load(object sender, EventArgs e)
         {
-            
+
         }
 
         private void Damage_Click(object sender, EventArgs e)
         {
             Combat.Instance.CurrentPlayer.Damage += Combat.Instance.CurrentPlayer.Damage * .20f;
             this.Close();
-            Combat.Instance.form1.Enabled = true;
+            form1.Enabled = true;
             Combat.Instance.NextPlayer();
-            Combat.Instance.form1.UpdateCombatUI();
-            Combat.Instance.form1.Show();
+            form1.UpdateAllUI();
+            form1.Show();
+            Combat.Instance.ChangeCombatState("FIGHTING");
         }
 
         private void Armor_Click(object sender, EventArgs e)
         {
             Combat.Instance.CurrentPlayer.Armor += Combat.Instance.CurrentPlayer.Armor * .20f;
             this.Close();
-            Combat.Instance.form1.Enabled = true;
+            form1.Enabled = true;
             Combat.Instance.NextPlayer();
-            Combat.Instance.form1.UpdateCombatUI();
+            form1.UpdateAllUI();
+            form1.Show();
+            Combat.Instance.ChangeCombatState("FIGHTING");
         }
 
         private void Speed_Click(object sender, EventArgs e)
         {
             Combat.Instance.CurrentPlayer.Speed += Combat.Instance.CurrentPlayer.Speed * .20f;
             this.Close();
-            Combat.Instance.form1.Enabled = true;
+            form1.Enabled = true;
             Combat.Instance.NextPlayer();
-            Combat.Instance.form1.UpdateCombatUI();
+            form1.UpdateAllUI();
+            form1.Show();
+            Combat.Instance.ChangeCombatState("FIGHTING");
         }
 
         private void Health_Click(object sender, EventArgs e)
         {
-            Combat.Instance.CurrentPlayer.Health += Combat.Instance.CurrentPlayer.Health * .20f;
+            Combat.Instance.CurrentPlayer.MaxHealth += Combat.Instance.CurrentPlayer.MaxHealth * .20f;
             this.Close();
-            Combat.Instance.form1.Enabled = true;
+            form1.Enabled = true;
             Combat.Instance.NextPlayer();
-            Combat.Instance.form1.UpdateCombatUI();
+            form1.UpdateAllUI();
+            form1.Show();
+            Combat.Instance.ChangeCombatState("FIGHTING");
         }
     }
 }

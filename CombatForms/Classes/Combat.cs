@@ -3,21 +3,23 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows.Forms;
+
 
 namespace CombatForms.Classes
 {
     public class Combat
     {
-        public Form1 form1;
+
 
         private static Combat instance;
 
         private Combat()
         {
             Entities = new List<Entity>();
-
-
+            controller = new FSM<CombatState>();
+            controller.AddTransition(CombatState.FIGHTING, CombatState.LEVELING);
+            controller.AddTransition(CombatState.LEVELING, CombatState.FIGHTING);
+            controller.Start("FIGHTING");
         }
 
         public static Combat Instance
@@ -44,7 +46,7 @@ namespace CombatForms.Classes
 
                 }
                 CurrentPlayer = Entities[currentIndex];
-                CurrentPlayer.ChangePlayerState("WAIT");
+                
             }
 
         }
@@ -63,12 +65,14 @@ namespace CombatForms.Classes
             SortEntities();
         }
         public string CombatLog = "";
-        
-        
-        
-        
+
+
+
+        public delegate void GenerateEnemy(Enemy e);
+        public GenerateEnemy OnEnemyGeneration { get; set; }
         public void GenerateNewEnemy(Enemy dead)
         {
+            Entities.Remove(Target);
             Random r = new Random();
             Enemy e = new Enemy();
             Enemy ne = new Enemy(Target.Name, (float)Math.Pow((double)e.Health, r.NextDouble() * (1.3d - 1d) + 1d),
@@ -76,22 +80,40 @@ namespace CombatForms.Classes
                   (float)Math.Pow((double)e.Damage,
                   r.NextDouble() * (1.3d - 1d) + 1d),
                   (float)Math.Pow(e.Speed, r.NextDouble() * (1.3d - 1d) + 1d));
-            ne.Info = dead.Info;
-            ne.PlayerButton = dead.PlayerButton;
-            ne.PlayerButton.Text = ne.Name;
-            ne.HealthBar = dead.HealthBar;
-            ne.onDeath = OnPlayerDeath;
-            ne.HealthBar = new ProgressBar();
-            ne.HealthBar.Location = new System.Drawing.Point(715, dead.PlayerButton.Location.Y + dead.PlayerButton.Size.Height);
-            ne.HealthBar.Value = (int)((ne.Health / ne.MaxHealth) * 100f);
-            ne.Info = new RichTextBox();
-            ne.Info.Location = new System.Drawing.Point(700, ne.HealthBar.Location.Y + ne.HealthBar.Size.Height);
-            ne.Info.Text = "Health: " + ne.Health + "\nDamage: " + ne.Damage +
-                        "\nSpeed: " + ne.Speed + "\nArmor: " + ne.Armor;
+            Target = ne;
+            Combat.Instance.Target.onDeath = Combat.Instance.OnPlayerDeath;
+            OnEnemyGeneration(dead);
             Entities.Add(ne);
             SortEntities();
         }
+        public delegate void Targeting(Object obj, EventArgs evt);
+        public Targeting getTarget;
 
+        public void UpdateCombat()
+        {
+            if (typeof(Player).ToString() == Combat.Instance.CurrentPlayer.ToString())
+            {
+                if (Combat.Instance.CurrentPlayer.CurrentState.ToString() == "WAIT")
+                    return;
+                if (Combat.Instance.CurrentPlayer.CurrentState.ToString() == "ATTACK" && Combat.Instance.Target != null)
+                    Combat.Instance.CurrentPlayer.DealDamage(Combat.Instance.Target, Combat.Instance.CurrentPlayer.Damage);
+
+            }
+            else if (typeof(Enemy).ToString() == Combat.Instance.CurrentPlayer.ToString())
+            {
+                getTarget(new object(), new EventArgs());
+                Combat.Instance.CurrentPlayer.DealDamage(Combat.Instance.Target, Combat.Instance.CurrentPlayer.Damage);
+
+            }
+
+            if(controller.GetState().ToString()=="FIGHTING")
+                Combat.Instance.NextPlayer();
+
+
+            Combat.Instance.Target = null;
+
+        }
+        public Action OnDeath { get; set; }
         private void OnPlayerDeath()
         {
             if (typeof(Player).ToString() == Target.ToString())
@@ -99,14 +121,23 @@ namespace CombatForms.Classes
                 Entities.Remove(Target);
                 return;
             }
-
+            OnDeath();
             GenerateNewEnemy(Target as Enemy);
-            form1.Controls.Remove(Target.Info);
-            form1.Controls.Remove(Target.HealthBar);
-            Entities.Remove(Target);
+
+
             SortEntities();
         }
-
+        public void ChangeCombatState(string state)
+        {
+            foreach (CombatState s in Enum.GetValues(typeof(CombatState)))
+            {
+                if (state == s.ToString())
+                {
+                    controller.ChangeState(s);
+                    break;
+                }
+            }
+        }
         public void Start()
         {
             currentIndex = 0;
@@ -120,9 +151,14 @@ namespace CombatForms.Classes
             currentIndex = Entities.IndexOf(CurrentPlayer);
         }
 
+        private enum CombatState
+        {
+            FIGHTING,
+            LEVELING,
+        }
 
 
-
+        private FSM<CombatState> controller;
         public Entity Target;
         public List<Entity> Entities;
         public Entity CurrentPlayer;

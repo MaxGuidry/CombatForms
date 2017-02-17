@@ -62,6 +62,11 @@ namespace CombatForms.Classes
                 State s = new State(state as Enum);
                 currentState = s;
             }
+            else if(typeof(V)==typeof(string))
+            {
+                if (states.ContainsKey((state as string)))
+                    currentState = states[state as string];
+            }
         }
         public bool ChangeState<V>(V s)
         {

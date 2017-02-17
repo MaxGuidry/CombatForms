@@ -22,12 +22,12 @@ namespace CombatForms
             Enemy e2 = new Enemy("e2",100f, 1, 20f, 2f);
             Enemy e3 = new Enemy("e3",65f, 1, 20f, 25f);
             Combat.Instance.AddPlayer(Knight);
-            //Combat.Instance.AddPlayer(Viking);
-            //Combat.Instance.AddPlayer(Samuri);
+            Combat.Instance.AddPlayer(Viking);
+            Combat.Instance.AddPlayer(Samuri);
             Combat.Instance.AddPlayer(e1);
-            //Combat.Instance.AddPlayer(e2);
-            //Combat.Instance.AddPlayer(e3);
-           
+            Combat.Instance.AddPlayer(e2);
+            Combat.Instance.AddPlayer(e3);
+
             Combat.Instance.SortEntities();
             Combat.Instance.Start();
             Application.EnableVisualStyles();

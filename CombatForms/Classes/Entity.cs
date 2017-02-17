@@ -21,14 +21,13 @@ namespace CombatForms.Classes
             controller.AddTransition(EntityState.WAIT, EntityState.DEFEND);
             controller.AddTransition(EntityState.ATTACK, EntityState.DEFEND);
             controller.AddTransition(EntityState.DEFEND, EntityState.ATTACK);
+            controller.AddTransition(EntityState.ATTACK, EntityState.WAIT);
+            controller.AddTransition(EntityState.DEFEND, EntityState.WAIT);
             controller.Start(EntityState.WAIT);
             m_Armor = 10f;
 
         }
-        public void Start()
-        {
-
-        }
+      
         protected EntityType m_Type;
         public EntityType Type
         {
@@ -71,6 +70,8 @@ namespace CombatForms.Classes
             }
         }
 
+
+       
         protected float m_Health;
         protected float m_MaxHealth;
         protected int m_Level;
