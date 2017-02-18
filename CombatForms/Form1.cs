@@ -340,9 +340,6 @@ namespace CombatForms
             pictureBox1.SendToBack();
             pictureBox1.Location = new Point(Controls[Combat.Instance.CurrentPlayer.Name + "targetButton"].Location.X + 150, Controls[Combat.Instance.CurrentPlayer.Name + "targetButton"].Location.Y - 75);
 
-
-
-
         }
         private void PlayerHealth_Click(object sender, EventArgs e)
         {
