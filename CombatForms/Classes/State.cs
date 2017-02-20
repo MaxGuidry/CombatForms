@@ -8,6 +8,9 @@ namespace CombatForms.Classes
 {
     public class State
     {
+        public State()
+        {
+        }
         public State(Enum e)
         {
             onEnd = null;
@@ -44,9 +47,13 @@ namespace CombatForms.Classes
         {
             return m_Name;
         }
+        [System.Xml.Serialization.XmlIgnore]
         public Handler onUpdate;
+        
         public delegate void Handler();
+        [System.Xml.Serialization.XmlIgnore]
         public Handler onStart;
+        [System.Xml.Serialization.XmlIgnore]
         public Handler onEnd;
         private string m_Name;
         public string Name { get { return m_Name; } }

@@ -15,7 +15,7 @@ namespace CombatForms.Classes
         {
 
 
-
+            new Entity();
             m_Alive = true;
             m_Level = 1;
             m_Damage = 20f;

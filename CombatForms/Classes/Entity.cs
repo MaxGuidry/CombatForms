@@ -28,6 +28,7 @@ namespace CombatForms.Classes
             controller.AddTransition(EntityState.ATTACK, EntityState.WAIT);
             controller.AddTransition(EntityState.DEFEND, EntityState.WAIT);
             controller.Start(EntityState.WAIT);
+            State s = controller.GetState();
             m_Armor = 10f;
 
         }
@@ -40,6 +41,7 @@ namespace CombatForms.Classes
         public delegate void Handler();
         [XmlIgnore]
         public Handler onDeath;
+        [XmlIgnore]
         public FSM<EntityState> controller;
         public enum EntityState
         {
@@ -51,7 +53,7 @@ namespace CombatForms.Classes
         public State CurrentState
         {
             get { return controller.GetState(); }
-
+           
         }
 
         public virtual void TakeDamage(float Amount)

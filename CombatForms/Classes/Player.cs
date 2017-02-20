@@ -18,9 +18,11 @@ namespace CombatForms.Classes
 
         public Player()
         {
-
+            new Entity();
+            
             m_ExpToNextLevel = 100f;
             m_Alive = true;
+           
             m_Level = 1;
             m_Type = EntityType.PLAYER;
 
@@ -97,12 +99,6 @@ namespace CombatForms.Classes
 
         private float m_Exp;
         private float m_ExpToNextLevel;
-       
-     
-      
-
-
-
         public float EXP { get { return m_Exp; } set { m_Exp = value; } }
        
        

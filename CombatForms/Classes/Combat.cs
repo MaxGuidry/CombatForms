@@ -11,7 +11,13 @@ namespace CombatForms.Classes
     public class Combat
     {
 
-
+        public void OnLoad()
+        {
+            foreach (Entity e in Entities)
+            {
+                e.onDeath += OnPlayerDeath; 
+            }
+        }
         private static Combat instance;
 
         private Combat()
@@ -46,8 +52,8 @@ namespace CombatForms.Classes
                     currentIndex = 0;
 
                 }
-                CurrentPlayer = Entities[currentIndex];
-                
+              
+
             }
 
         }
@@ -110,15 +116,15 @@ namespace CombatForms.Classes
 
             }
 
-            if(controller.GetState().ToString()=="FIGHTING")
+            if (controller.GetState().ToString() == "FIGHTING")
                 Combat.Instance.NextPlayer();
 
 
             Combat.Instance.Target = null;
 
         }
-        [XmlIgnore]
-        public Action OnDeath { get; set; }
+
+
         private void OnPlayerDeath()
         {
             if (typeof(Player).ToString() == Target.ToString())
@@ -126,9 +132,9 @@ namespace CombatForms.Classes
                 Entities.Remove(Target);
                 return;
             }
-            
+
             GenerateNewEnemy(Target as Enemy);
-            
+
 
             SortEntities();
         }
@@ -146,7 +152,7 @@ namespace CombatForms.Classes
         public void Start()
         {
             currentIndex = 0;
-            CurrentPlayer = Entities[currentIndex];
+           
 
         }
 
@@ -166,8 +172,14 @@ namespace CombatForms.Classes
         private FSM<CombatState> controller;
         public Entity Target;
         public List<Entity> Entities;
-        public Entity CurrentPlayer;
-        private int currentIndex;
+        public Entity CurrentPlayer
+        {
+            get
+            {
+                return Entities[currentIndex];
+            }
+        }
+        public int currentIndex;
 
     }
 }
