@@ -40,7 +40,6 @@ namespace CombatForms.Classes
 
         }
 
-
         public void NextPlayer()
         {
             CurrentPlayer.TurnsTaken++;

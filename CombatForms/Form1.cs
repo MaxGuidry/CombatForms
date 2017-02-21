@@ -67,6 +67,7 @@ namespace CombatForms
 
                 if (e.Type == Entity.EntityType.PLAYER)
                 {
+                    (e as Player).DeathUpdate += UpdateAllUI;
                     (e as Player).OnLevelUp += delegate { this.Enabled = false; UpdateUI(); };
                     (e as Player).OnLevelUp += delegate { Combat.Instance.ChangeCombatState("LEVELING"); };
                 }
@@ -87,6 +88,7 @@ namespace CombatForms
             EndTurn_Click(new object(), new EventArgs());
 
         }
+        
         public List<Control> CreateControls()
         {
             int i = 1;
@@ -308,6 +310,7 @@ namespace CombatForms
             {
                 if (e.Type == Entity.EntityType.PLAYER)
                 {
+                    (e as Player).DeathUpdate += UpdateAllUI;
                     (e as Player).OnLevelUp += delegate { this.Enabled = false; UpdateUI(); };
                     (e as Player).OnLevelUp += delegate { Combat.Instance.ChangeCombatState("LEVELING"); };
                 }

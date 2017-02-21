@@ -57,9 +57,10 @@ namespace CombatForms.Classes
             if (m_Health - Amount < 0)
             {
                 m_Health = 0;
-               
-                
+
+                this.DeathUpdate();
                 this.onDeath.Invoke();
+                
                 return;
             }
             m_Health -= Amount;
@@ -67,7 +68,8 @@ namespace CombatForms.Classes
         }
         [XmlIgnore]
         public Action OnLevelUp;
-
+        [XmlIgnore]
+        public Action DeathUpdate;
         private void LevelUp()
         {
             m_Level++;
