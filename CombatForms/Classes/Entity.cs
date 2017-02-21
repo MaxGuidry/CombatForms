@@ -77,8 +77,7 @@ namespace CombatForms.Classes
             }
         }
 
-
-
+        //would just use the AutoProperties instead of making these backing fields for readability
         protected float m_Health;
         protected float m_MaxHealth;
         protected int m_Level;

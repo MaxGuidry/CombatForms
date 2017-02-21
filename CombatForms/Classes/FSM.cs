@@ -46,8 +46,8 @@ namespace CombatForms.Classes
                 throw new Exception("Connot convert type:" + typeof(V) + " to type State or Enum");
             }
             List<State> tmp = new List<State>();
-            tmp.Add(From);
-            tmp.Add(To);
+            tmp.Add(states[From.Name]);
+            tmp.Add(states[To.Name]);
             transitions.Add(From.Name + "->" + To.Name, tmp);
         }
         public void Start<V>(V state)
@@ -60,7 +60,9 @@ namespace CombatForms.Classes
             else if (typeof(V) == typeof(T))
             {
                 State s = new State(state as Enum);
-                currentState = s;
+                currentState = states[s.Name];
+                if(currentState.onStart != null)
+                    currentState.onStart.Invoke();
             }
             else if(typeof(V)==typeof(string))
             {
@@ -68,6 +70,12 @@ namespace CombatForms.Classes
                     currentState = states[state as string];
             }
         }
+        /// <summary>
+        /// should only change state to relevant states in this statemachine
+        /// </summary>
+        /// <typeparam name="V"></typeparam>
+        /// <param name="s"></param>
+        /// <returns></returns>
         public bool ChangeState<V>(V s)
         {
             if (typeof(V) == typeof(State))
@@ -99,7 +107,7 @@ namespace CombatForms.Classes
                     }
 
                     currentState = states[(s as Enum).ToString()];
-                    if (currentState.onEnd != null)
+                    if (currentState.onStart != null)
                     {
                         currentState.onStart.Invoke();
                     }
@@ -117,7 +125,7 @@ namespace CombatForms.Classes
                     }
 
                     currentState = states[(s as Enum).ToString()];
-                    if (currentState.onEnd != null)
+                    if (currentState.onStart != null)
                     {
                         currentState.onStart.Invoke();
                     }

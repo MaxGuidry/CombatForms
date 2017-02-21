@@ -65,9 +65,9 @@ namespace CombatForms.Classes
             Random r = new Random();
             int chance = r.Next(1, 5);
             if (chance < 4)
-                Combat.Instance.CurrentPlayer.ChangePlayerState("ATTACK");
+                Combat.Instance.CurrentEntity.ChangePlayerState("ATTACK");
             else if (chance == 4)
-                Combat.Instance.CurrentPlayer.ChangePlayerState("DEFEND");
+                Combat.Instance.CurrentEntity.ChangePlayerState("DEFEND");
         }
       
     }

@@ -62,6 +62,12 @@
     </Compile>
     <Compile Include="Iterfaces\IDamagable.cs" />
     <Compile Include="Iterfaces\IDamager.cs" />
+    <Compile Include="LevelUpControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="LevelUpControl.Designer.cs">
+      <DependentUpon>LevelUpControl.cs</DependentUpon>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="StatBuff.cs">
@@ -72,6 +78,9 @@
     </Compile>
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="LevelUpControl.resx">
+      <DependentUpon>LevelUpControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

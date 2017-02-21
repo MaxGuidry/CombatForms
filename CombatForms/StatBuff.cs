@@ -26,7 +26,7 @@ namespace CombatForms
 
         private void Damage_Click(object sender, EventArgs e)
         {
-            Combat.Instance.CurrentPlayer.Damage += Combat.Instance.CurrentPlayer.Damage * .20f;
+            Combat.Instance.CurrentEntity.Damage += Combat.Instance.CurrentEntity.Damage * .20f;
             this.Close();
             form1.Enabled = true;
             Combat.Instance.NextPlayer();
@@ -37,7 +37,7 @@ namespace CombatForms
 
         private void Armor_Click(object sender, EventArgs e)
         {
-            Combat.Instance.CurrentPlayer.Armor += Combat.Instance.CurrentPlayer.Armor * .20f;
+            Combat.Instance.CurrentEntity.Armor += Combat.Instance.CurrentEntity.Armor * .20f;
             this.Close();
             form1.Enabled = true;
             Combat.Instance.NextPlayer();
@@ -48,7 +48,7 @@ namespace CombatForms
 
         private void Speed_Click(object sender, EventArgs e)
         {
-            Combat.Instance.CurrentPlayer.Speed += Combat.Instance.CurrentPlayer.Speed * .20f;
+            Combat.Instance.CurrentEntity.Speed += Combat.Instance.CurrentEntity.Speed * .20f;
             this.Close();
             form1.Enabled = true;
             Combat.Instance.NextPlayer();
@@ -59,7 +59,7 @@ namespace CombatForms
 
         private void Health_Click(object sender, EventArgs e)
         {
-            Combat.Instance.CurrentPlayer.MaxHealth += Combat.Instance.CurrentPlayer.MaxHealth * .20f;
+            Combat.Instance.CurrentEntity.MaxHealth += Combat.Instance.CurrentEntity.MaxHealth * .20f;
             this.Close();
             form1.Enabled = true;
             Combat.Instance.NextPlayer();

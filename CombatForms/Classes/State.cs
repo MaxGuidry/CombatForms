@@ -20,16 +20,18 @@ namespace CombatForms.Classes
         }
         public void AddEnterFunction(Delegate os)
         {
-            onStart += os as Handler;
+            Action h = os as Action;
+            onStart += h;
         }
         public void AddExitFunction(Delegate oe)
         {
-            onEnd += oe as Handler;
+            onEnd += oe as Action;
         }
         public void AddActiveFunction(Delegate wa)
         {
-            onUpdate += wa as Handler;
+            onUpdate += wa as Action;
         }
+        
         static public bool operator ==(State current, State other)
         {
             if(current.Name == other.Name && current.onEnd == other.onEnd && current.onStart == other.onStart && current.onUpdate == other.onUpdate)
@@ -48,14 +50,15 @@ namespace CombatForms.Classes
             return m_Name;
         }
         [System.Xml.Serialization.XmlIgnore]
-        public Handler onUpdate;
+        public Action onUpdate;
         
-        public delegate void Handler();
+        
         [System.Xml.Serialization.XmlIgnore]
-        public Handler onStart;
+        public Action onStart;
         [System.Xml.Serialization.XmlIgnore]
-        public Handler onEnd;
+        public Action onEnd;
         private string m_Name;
         public string Name { get { return m_Name; } }
     }
+    
 }

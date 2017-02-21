@@ -67,9 +67,9 @@ namespace CombatForms.Classes
             
         }
         [XmlIgnore]
-        public Action OnLevelUp;
+        public System.Action OnLevelUp;
         [XmlIgnore]
-        public Action DeathUpdate;
+        public System.Action DeathUpdate;
         private void LevelUp()
         {
             m_Level++;

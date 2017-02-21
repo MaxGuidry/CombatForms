@@ -164,34 +164,37 @@ namespace CombatForms
         public void GetTarget(object sender, EventArgs eventargs)
         {
 
-            Combat.Instance.Target = Combat.Instance.CurrentPlayer;
-            if (typeof(Player).ToString() == Combat.Instance.CurrentPlayer.ToString())
-            {
-                foreach (Entity e in Combat.Instance.Entities)
-                {
-                    if (e.Name == (sender as Control).Text && !(Combat.Instance.CurrentPlayer.ToString() == e.ToString()))
-                    {
-                        Combat.Instance.Target = e;
 
-                        return;
-                    }
-                }
-            }
-            else if (typeof(Enemy).ToString() == Combat.Instance.CurrentPlayer.ToString())
-            {
-                Random r = new Random();
-                string target1 = Combat.Instance.Target.ToString();
-                string target2 = typeof(Player).ToString();
-                while (Combat.Instance.Target.ToString() != typeof(Player).ToString())
-                {
-                    Combat.Instance.Target = Combat.Instance.Entities[r.Next(0, Combat.Instance.Entities.Count)];
-                }
-            }
+            Combat.Instance.SetTarget((sender as Control).Text); 
+
+
+
+            //if (typeof(Player).ToString() == Combat.Instance.CurrentEntity.ToString())
+            //{
+            //    foreach (Entity e in Combat.Instance.Entities)
+            //    {
+            //        if (e.Name == (sender as Control).Text && !(Combat.Instance.CurrentEntity.ToString() == e.ToString()))
+            //        {
+            //            Combat.Instance.Target = e;
+
+            //            return;
+            //        }
+            //    }
+            //}
+            //else if (typeof(Enemy).ToString() == Combat.Instance.CurrentEntity.ToString())
+            //{
+            //    Random r = new Random();
+            //    string target1 = Combat.Instance.Target.ToString();
+            //    string target2 = typeof(Player).ToString();
+            //    while (Combat.Instance.Target.ToString() != typeof(Player).ToString())
+            //    {
+            //        Combat.Instance.Target = Combat.Instance.Entities[r.Next(0, Combat.Instance.Entities.Count)];
+            //    }
+            //}
         }
         public void SetTarget(object o, EventArgs ea)
         {
-            Entity tar = Combat.Instance.Entities.Find(x => x.Name == (o as Button).Text);
-            Combat.Instance.Target = tar;
+            
             if (Combat.Instance.Target != null)
             {
                 pictureBox2.Location = new Point(Controls[Combat.Instance.Target.Name + "targetButton"].Location.X - 183, Controls[Combat.Instance.Target.Name + "targetButton"].Location.Y - 75);
@@ -261,13 +264,13 @@ namespace CombatForms
             richTextBox2.Text += Combat.Instance.CombatLog;
             Combat.Instance.CombatLog = "";
 
-            Combat.Instance.CurrentInfoLog = string.Format("Current Player: {0} \nCurrentState: {1} \nTurns Left: {2} \nTarget: ", Combat.Instance.CurrentPlayer.Name, Combat.Instance.CurrentPlayer.CurrentState, Combat.Instance.CurrentPlayer.NumberOfTurns - Combat.Instance.CurrentPlayer.TurnsTaken, Combat.Instance.Target);
+            Combat.Instance.CurrentInfoLog = string.Format("Current Player: {0} \nCurrentState: {1} \nTurns Left: {2} \nTarget: ", Combat.Instance.CurrentEntity.Name, Combat.Instance.CurrentEntity.CurrentState, Combat.Instance.CurrentEntity.NumberOfTurns - Combat.Instance.CurrentEntity.TurnsTaken, Combat.Instance.Target);
             richTextBox1.Text = Combat.Instance.CurrentInfoLog;
 
             if (Combat.Instance.Target != null)
                 richTextBox1.Text += Combat.Instance.Target.Name;
 
-            if (Combat.Instance.CurrentPlayer.ToString() == typeof(Enemy).ToString())
+            if (Combat.Instance.CurrentEntity.ToString() == typeof(Enemy).ToString())
             {
 
 
@@ -293,7 +296,7 @@ namespace CombatForms
                 }
             }
             pictureBox1.SendToBack();
-            pictureBox1.Location = new Point(Controls[Combat.Instance.CurrentPlayer.Name + "targetButton"].Location.X + 150, Controls[Combat.Instance.CurrentPlayer.Name + "targetButton"].Location.Y - 75);
+            pictureBox1.Location = new Point(Controls[Combat.Instance.CurrentEntity.Name + "targetButton"].Location.X + 150, Controls[Combat.Instance.CurrentEntity.Name + "targetButton"].Location.Y - 75);
 
         }
         public void Setup()
@@ -315,9 +318,9 @@ namespace CombatForms
                     (e as Player).OnLevelUp += delegate { Combat.Instance.ChangeCombatState("LEVELING"); };
                 }
             }
-            pictureBox1.Location = new Point(Controls[Combat.Instance.CurrentPlayer.Name + "targetButton"].Location.X + 150, Controls[Combat.Instance.CurrentPlayer.Name + "targetButton"].Location.Y - 75);
+            pictureBox1.Location = new Point(Controls[Combat.Instance.CurrentEntity.Name + "targetButton"].Location.X + 150, Controls[Combat.Instance.CurrentEntity.Name + "targetButton"].Location.Y - 75);
             pictureBox2.Visible = false;
-            PlayerHealth.Value = (int)((Combat.Instance.CurrentPlayer.Health / Combat.Instance.CurrentPlayer.MaxHealth) * 100f);
+            PlayerHealth.Value = (int)((Combat.Instance.CurrentEntity.Health / Combat.Instance.CurrentEntity.MaxHealth) * 100f);
         }
         #endregion
 
@@ -334,12 +337,12 @@ namespace CombatForms
         }
         private void Attack_Click(object sender, EventArgs e)
         {
-            Combat.Instance.CurrentPlayer.ChangePlayerState("ATTACK");
+            Combat.Instance.CurrentEntity.ChangePlayerState("ATTACK");
             UpdateAllUI();
         }
         private void Defend_Click(object sender, EventArgs e)
         {
-            Combat.Instance.CurrentPlayer.ChangePlayerState("DEFEND");
+            Combat.Instance.CurrentEntity.ChangePlayerState("DEFEND");
             UpdateAllUI();
         }
         private void EndTurn_Click(object sender, EventArgs e)
@@ -347,7 +350,7 @@ namespace CombatForms
 
             Combat.Instance.UpdateCombat();
             pictureBox2.Visible = false;
-            PlayerHealth.Value = (int)((Combat.Instance.CurrentPlayer.Health / Combat.Instance.CurrentPlayer.MaxHealth) * 100f);
+            PlayerHealth.Value = (int)((Combat.Instance.CurrentEntity.Health / Combat.Instance.CurrentEntity.MaxHealth) * 100f);
             UpdateAllUI();
         }
 
@@ -362,7 +365,7 @@ namespace CombatForms
         }
         private void Save_Click(object sender, EventArgs e)
         {
-            DataSerializer<int>.Serialize("Current Index", Combat.Instance.Entities.IndexOf(Combat.Instance.CurrentPlayer));
+            DataSerializer<int>.Serialize("Current Index", Combat.Instance.Entities.IndexOf(Combat.Instance.CurrentEntity));
             DataSerializer<List<Entity>>.Serialize("All Players", Combat.Instance.Entities);
 
         }

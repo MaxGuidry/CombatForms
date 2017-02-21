@@ -91,7 +91,6 @@
             this.textBox1.Size = new System.Drawing.Size(108, 13);
             this.textBox1.TabIndex = 7;
             this.textBox1.Text = "Current Players Health";
-           
             // 
             // richTextBox1
             // 
