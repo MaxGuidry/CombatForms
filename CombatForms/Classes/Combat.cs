@@ -48,9 +48,9 @@ namespace CombatForms.Classes
             {
                 CurrentPlayer.TurnsTaken = 0;
                 CurrentPlayer.TurnTaken = true;
-                while (CurrentPlayer.TurnTaken == true && currentIndex < Entities.Count - 1)
+                while (CurrentPlayer.TurnTaken == true && currentIndex < Entities.Count)
                     currentIndex++;
-                if (currentIndex >= Entities.Count - 1)
+                if (currentIndex+1 > Entities.Count - 1)
                 {
 
                     currentIndex = 0;
@@ -67,12 +67,18 @@ namespace CombatForms.Classes
                 e.onDeath = OnPlayerDeath;
                 Entities.Add(e);
                 SortEntities();
+                if (Entities.IndexOf(e) < Entities.IndexOf(CurrentPlayer))
+                    currentIndex++;
                 return;
             }
             e.onDeath += OnPlayerDeath;
             Entities.Add(e);
+
             SortEntities();
+            if (Entities.IndexOf(e) < Entities.IndexOf(CurrentPlayer))
+                currentIndex++;
         }
+
         public string CurrentInfoLog = "";
         public string CombatLog = "";
 
@@ -94,7 +100,7 @@ namespace CombatForms.Classes
             Target = ne;
             Combat.Instance.Target.onDeath = Combat.Instance.OnPlayerDeath;
             OnEnemyGeneration(dead);
-            Entities.Add(ne);
+            AddPlayer(ne);
             SortEntities();
         }
         public delegate void Targeting(Object obj, EventArgs evt);
