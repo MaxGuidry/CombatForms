@@ -21,7 +21,7 @@ namespace CombatForms.Classes
             m_Damage = 20f;
             m_Health = 50f;
             m_MaxHealth = m_Health;
-            m_Speed = 5f;
+            m_Speed = 7f;
             m_Type = EntityType.ENEMY;
         }
 

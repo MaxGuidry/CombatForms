@@ -248,6 +248,7 @@ namespace CombatForms
                     Controls[e.Name + "info"].Text = (Controls[e.Name + "info"]).Text = "Health: " + e.Health + "\nDamage: " + e.Damage +
                         "\nSpeed: " + e.Speed + "\nArmor: " + e.Armor + "\nLevel: " + e.Level;
                     Controls[e.Name + "state"].Text = "Current State: " + e.CurrentState.ToString();
+                    (Controls[e.Name + "health"] as ProgressBar).Value = (int)((e.Health / e.MaxHealth) * 100f);
                 }
             }
         }

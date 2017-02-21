@@ -15,7 +15,7 @@ namespace CombatForms.Classes
         {
             foreach (Entity e in Entities)
             {
-                e.onDeath += OnPlayerDeath; 
+                e.onDeath += OnPlayerDeath;
             }
         }
         private static Combat instance;
@@ -43,18 +43,24 @@ namespace CombatForms.Classes
 
         public void NextPlayer()
         {
+            CurrentPlayer.TurnsTaken++;
             if (CurrentPlayer.NumberOfTurns <= CurrentPlayer.TurnsTaken)
             {
-                currentIndex++;
-                if (currentIndex >= Entities.Count)
+                CurrentPlayer.TurnsTaken = 0;
+                CurrentPlayer.TurnTaken = true;
+                while (CurrentPlayer.TurnTaken == true&&currentIndex<Entities.Count-1)
+                    currentIndex++;
+                if (currentIndex >= Entities.Count-1)
                 {
-
+                    
                     currentIndex = 0;
-
+                    foreach (Entity e in Entities)
+                        e.TurnTaken = false;
                 }
-              
+
 
             }
+
 
         }
 
@@ -127,6 +133,8 @@ namespace CombatForms.Classes
 
         private void OnPlayerDeath()
         {
+            if (Entities.IndexOf(Target) < Entities.IndexOf(CurrentPlayer))
+                currentIndex--;
             if (typeof(Player).ToString() == Target.ToString())
             {
                 Entities.Remove(Target);
@@ -152,14 +160,14 @@ namespace CombatForms.Classes
         public void Start()
         {
             currentIndex = 0;
-           
+
 
         }
 
         public void SortEntities()
         {
             Entities.Sort((x, y) => -1 * x.Speed.CompareTo(y.Speed));
-            currentIndex = Entities.IndexOf(CurrentPlayer);
+            
         }
 
         private enum CombatState

@@ -14,13 +14,13 @@ namespace CombatForms
         [STAThread]
         static void Main()
         {
-            Player Knight = new Player("Knight",100f, 1, 460f, 10f);
-            Player Viking = new Player("Viking",150f, 1, 655f, 5f);
-            Player Samuri = new Player("Samuri",90f, 1, 635f, 30f);
+            Player Knight = new Player("Knight",100f, 1, 50f, 7f);
+            Player Viking = new Player("Viking",150f, 1, 75f, 5f);
+            Player Samuri = new Player("Samuri",90f, 1, 40f, 12f);
            
-            Enemy e1 = new Enemy("e1",70f, 1, 20f, 9f);
-            Enemy e2 = new Enemy("e2",100f, 1, 20f, 2f);
-            Enemy e3 = new Enemy("e3",65f, 1, 20f, 25f);
+            Enemy e1 = new Enemy("e1",70f, 1, 25f, 9f);
+            Enemy e2 = new Enemy("e2",100f, 1, 35f, 5f);
+            Enemy e3 = new Enemy("e3",65f, 1, 20f, 12f);
             Combat.Instance.AddPlayer(Knight);
             Combat.Instance.AddPlayer(Viking);
             Combat.Instance.AddPlayer(Samuri);

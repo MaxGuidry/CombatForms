@@ -94,7 +94,7 @@ namespace CombatForms.Classes
         public float Health { get { return m_Health; } set { m_Health = value; } }
 
         public float Speed { get { return m_Speed; } set { m_Speed = value; } }
-        public int NumberOfTurns { get { return m_NumberOfTurns; } set { m_NumberOfTurns = value; } }
+        public int NumberOfTurns { get { return (int)(m_Speed/5f); } set { m_NumberOfTurns = value; } }
         public int TurnsTaken { get { return m_TurnsTaken; } set { m_TurnsTaken = value; } }
         public string Name { get { return m_Name; } set { m_Name = value; } }
 
@@ -102,6 +102,6 @@ namespace CombatForms.Classes
         public float MaxHealth { get { return m_MaxHealth; } set { m_MaxHealth = value; } }
         public int Level { get { return m_Level; } set { m_Level = value; } }
         public float Armor { get { return m_Armor; } set { m_Armor = value; } }
-
+        public bool TurnTaken { get; set; }
     }
 }
