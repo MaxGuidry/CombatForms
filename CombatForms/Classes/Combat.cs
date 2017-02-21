@@ -48,20 +48,16 @@ namespace CombatForms.Classes
             {
                 CurrentPlayer.TurnsTaken = 0;
                 CurrentPlayer.TurnTaken = true;
-                while (CurrentPlayer.TurnTaken == true&&currentIndex<Entities.Count-1)
+                while (CurrentPlayer.TurnTaken == true && currentIndex < Entities.Count - 1)
                     currentIndex++;
-                if (currentIndex >= Entities.Count-1)
+                if (currentIndex >= Entities.Count - 1)
                 {
-                    
+
                     currentIndex = 0;
                     foreach (Entity e in Entities)
                         e.TurnTaken = false;
                 }
-
-
             }
-
-
         }
 
         public void AddPlayer(Entity e)
@@ -77,8 +73,8 @@ namespace CombatForms.Classes
             Entities.Add(e);
             SortEntities();
         }
+        public string CurrentInfoLog = "";
         public string CombatLog = "";
-
 
 
         public delegate void GenerateEnemy(Enemy e);
@@ -112,14 +108,30 @@ namespace CombatForms.Classes
                 if (Combat.Instance.CurrentPlayer.CurrentState.ToString() == "WAIT")
                     return;
                 if (Combat.Instance.CurrentPlayer.CurrentState.ToString() == "ATTACK" && Combat.Instance.Target != null)
+                {
                     Combat.Instance.CurrentPlayer.DealDamage(Combat.Instance.Target, Combat.Instance.CurrentPlayer.Damage);
+                    if (Target.CurrentState.ToString() == "DEFEND")
+                    {
+                        CombatLog = Target.Name + " defended for " + Target.Armor + " damage \n";
+                        CombatLog = CurrentPlayer.Name + " did " + CurrentPlayer.Damage + " damage to " + Target.Name;
+                    }
 
+                    CombatLog = CurrentPlayer.Name + " did " + CurrentPlayer.Damage + " damage to " + Target.Name + "\n";
+                }
             }
             else if (typeof(Enemy).ToString() == Combat.Instance.CurrentPlayer.ToString())
             {
                 getTarget(new object(), new EventArgs());
                 Combat.Instance.CurrentPlayer.DealDamage(Combat.Instance.Target, Combat.Instance.CurrentPlayer.Damage);
 
+                if (Target.CurrentState.ToString() == "DEFEND")
+                {
+                    CombatLog = Target.Name + " defended for " + Target.Armor + " damage \n";
+                    CombatLog += CurrentPlayer.Name + " did " + CurrentPlayer.Damage + " damage to " + Target.Name;
+                }
+
+                else
+                    CombatLog = CurrentPlayer.Name + " did " + CurrentPlayer.Damage + " damage to " + Target.Name + "\n";
             }
 
             if (controller.GetState().ToString() == "FIGHTING")
@@ -167,7 +179,7 @@ namespace CombatForms.Classes
         public void SortEntities()
         {
             Entities.Sort((x, y) => -1 * x.Speed.CompareTo(y.Speed));
-            
+
         }
 
         private enum CombatState

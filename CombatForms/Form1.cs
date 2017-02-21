@@ -33,12 +33,12 @@ namespace CombatForms
             health = Controls[e.Name + "health"] as ProgressBar;
             targetButton.Text = e.Name;
 
-            health.Location = new System.Drawing.Point(715, Controls[e.Name + "targetButton"].Location.Y + Controls[e.Name + "targetButton"].Size.Height);
+            health.Location = new System.Drawing.Point(685, Controls[e.Name + "targetButton"].Location.Y + Controls[e.Name + "targetButton"].Size.Height);
             health.Value = (int)((Combat.Instance.Target.Health / Combat.Instance.Target.MaxHealth) * 100f);
 
 
             info = Controls[e.Name + "info"] as RichTextBox;
-            info.Location = new System.Drawing.Point(715, Controls[e.Name + "health"].Location.Y + Controls[e.Name + "health"].Size.Height);
+            info.Location = new System.Drawing.Point(685, Controls[e.Name + "health"].Location.Y + Controls[e.Name + "health"].Size.Height);
 
             info.Text = "Health: " + Combat.Instance.Target.Health + "\nDamage: " + Combat.Instance.Target.Damage +
                         "\nSpeed: " + Combat.Instance.Target.Speed + "\nArmor: " + Combat.Instance.Target.Armor;
@@ -73,6 +73,7 @@ namespace CombatForms
             }
             Combat.Instance.OnEnemyGeneration += GenerateNewEnemyControl;
             Combat.Instance.getTarget += GetTarget;
+            Combat.Instance.OnLoad();
         }
         public void UpdateAllUI()
         {
@@ -94,10 +95,6 @@ namespace CombatForms
             foreach (Entity e in Combat.Instance.Entities)
             {
 
-                //e.StateBox = new RichTextBox();
-                //e.Info = new RichTextBox();
-                //e.HealthBar = new ProgressBar();
-                // e.PlayerButton = new Button();
 
                 RichTextBox state = new RichTextBox();
                 RichTextBox info = new RichTextBox();
@@ -114,34 +111,34 @@ namespace CombatForms
                 targetButton.Size = new Size(150, 50);
                 if (typeof(Player).ToString() == e.ToString())
                 {
-                    targetButton.Location = new System.Drawing.Point(110, 150 * i);
+                    targetButton.Location = new System.Drawing.Point(80, 150 * i);
                     targetButton.Text = e.Name;
 
-                    health.Location = new System.Drawing.Point(135, targetButton.Location.Y + targetButton.Size.Height);
+                    health.Location = new System.Drawing.Point(105, targetButton.Location.Y + targetButton.Size.Height);
 
                     (health as ProgressBar).Value = (int)((e.Health / e.MaxHealth) * 100f);
 
-                    info.Location = new System.Drawing.Point(135, health.Location.Y + health.Size.Height);
+                    info.Location = new System.Drawing.Point(105, health.Location.Y + health.Size.Height);
                     (info as RichTextBox).Text = "Health: " + e.Health + "\nDamage: " + e.Damage +
                         "\nSpeed: " + e.Speed + "\nArmor: " + e.Armor + "\nLevel: " + e.Level;
-                    state.Location = new System.Drawing.Point(265, targetButton.Location.Y);
-                    state.Size = new System.Drawing.Size(150, 30);
+                    state.Location = new System.Drawing.Point(235, targetButton.Location.Y);
+                    state.Size = new System.Drawing.Size(140, 30);
                     (state as RichTextBox).Text = "Current State: " + e.CurrentState.ToString();
                     i++;
                 }
                 if (typeof(Enemy).ToString() == e.ToString())
                 {
-                    targetButton.Location = new System.Drawing.Point(690, 150 * j);
-                    health.Location = new System.Drawing.Point(715, targetButton.Location.Y + targetButton.Size.Height);
+                    targetButton.Location = new System.Drawing.Point(660, 150 * j);
+                    health.Location = new System.Drawing.Point(685, targetButton.Location.Y + targetButton.Size.Height);
                     (health as ProgressBar).Value = (int)((e.Health / e.MaxHealth) * 100f);
 
                     targetButton.Text = e.Name;
 
 
-                    info.Location = new System.Drawing.Point(715, health.Location.Y + health.Size.Height);
+                    info.Location = new System.Drawing.Point(685, health.Location.Y + health.Size.Height);
                     (info as RichTextBox).Text = "Health: " + e.Health + "\nDamage: " + e.Damage +
                          "\nSpeed: " + e.Speed + "\nArmor: " + e.Armor + "\nLevel: " + e.Level;
-                    state.Location = new System.Drawing.Point(845, targetButton.Location.Y);
+                    state.Location = new System.Drawing.Point(820, targetButton.Location.Y);
                     state.Size = new System.Drawing.Size(150, 30);
                     (state as RichTextBox).Text = "Current State: " + e.CurrentState.ToString();
                     j++;
@@ -236,9 +233,9 @@ namespace CombatForms
 
 
 
-                        state.Location = new System.Drawing.Point(845, Controls[e.Name + "targetButton"].Location.Y);
+                        state.Location = new System.Drawing.Point(835, Controls[e.Name + "targetButton"].Location.Y);
                         state.Size = new System.Drawing.Size(150, 30);
-                        info.Location = new System.Drawing.Point(715, Controls[e.Name + "health"].Location.Y + Controls[e.Name + "health"].Size.Height);
+                        info.Location = new System.Drawing.Point(705, Controls[e.Name + "health"].Location.Y + Controls[e.Name + "health"].Size.Height);
 
                         this.Controls.Add(info);
                         this.Controls.Add(state);
@@ -257,9 +254,13 @@ namespace CombatForms
 
 
             StatBuff.form1 = this;
+            if (richTextBox2.Text.Length > 150)
+                richTextBox2.Text = "";
+            richTextBox2.Text += Combat.Instance.CombatLog;
+            Combat.Instance.CombatLog = "";
 
-            Combat.Instance.CombatLog = string.Format("Current Player: {0} \nCurrentState: {1} \nTarget: ", Combat.Instance.CurrentPlayer.Name, Combat.Instance.CurrentPlayer.CurrentState, Combat.Instance.Target);
-            richTextBox1.Text = Combat.Instance.CombatLog;
+            Combat.Instance.CurrentInfoLog = string.Format("Current Player: {0} \nCurrentState: {1} \nTurns Left: {2} \nTarget: ", Combat.Instance.CurrentPlayer.Name, Combat.Instance.CurrentPlayer.CurrentState, Combat.Instance.CurrentPlayer.NumberOfTurns - Combat.Instance.CurrentPlayer.TurnsTaken, Combat.Instance.Target);
+            richTextBox1.Text = Combat.Instance.CurrentInfoLog;
 
             if (Combat.Instance.Target != null)
                 richTextBox1.Text += Combat.Instance.Target.Name;
@@ -293,15 +294,8 @@ namespace CombatForms
             pictureBox1.Location = new Point(Controls[Combat.Instance.CurrentPlayer.Name + "targetButton"].Location.X + 150, Controls[Combat.Instance.CurrentPlayer.Name + "targetButton"].Location.Y - 75);
 
         }
-        public void RedArrow()
+        public void Setup()
         {
-
-        }
-        #endregion
-
-        public Form1()
-        {
-            InitializeComponent();
             foreach (Control c in this.CreateControls())
             {
                 this.Controls.Add(c);
@@ -322,24 +316,21 @@ namespace CombatForms
             pictureBox2.Visible = false;
             PlayerHealth.Value = (int)((Combat.Instance.CurrentPlayer.Health / Combat.Instance.CurrentPlayer.MaxHealth) * 100f);
         }
+        #endregion
+
+        public Form1()
+        {
+            InitializeComponent();
+            Setup();
+
+        }
 
         private void Form1_Load(object sender, EventArgs e)
         {
             UpdateCombatUI();
         }
-
-        private void PlayerHealth_Click(object sender, EventArgs e)
-        {
-
-        }
-        private void EnemyHealth_Click(object sender, EventArgs e)
-        {
-
-        }
         private void Attack_Click(object sender, EventArgs e)
         {
-
-
             Combat.Instance.CurrentPlayer.ChangePlayerState("ATTACK");
             UpdateAllUI();
         }
@@ -356,21 +347,14 @@ namespace CombatForms
             PlayerHealth.Value = (int)((Combat.Instance.CurrentPlayer.Health / Combat.Instance.CurrentPlayer.MaxHealth) * 100f);
             UpdateAllUI();
         }
-        private void Form1_MouseDown(object sender, MouseEventArgs e)
-        {
 
-        }
-        private void pictureBox1_Click(object sender, EventArgs e)
-        {
-
-        }
         private void button5_Click(object sender, EventArgs e)
         {
             Combat.Instance.currentIndex = DataSerializer<int>.Deserialize("Current Index");
             Combat.Instance.Entities = DataSerializer<List<Entity>>.Deserialize("All PLayers");
             CreateControls();
             OnLoad();
-            Combat.Instance.OnLoad();
+
             UpdateAllUI();
         }
         private void Save_Click(object sender, EventArgs e)

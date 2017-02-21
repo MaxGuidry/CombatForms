@@ -39,6 +39,7 @@
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
             this.Save = new System.Windows.Forms.Button();
             this.Loader = new System.Windows.Forms.Button();
+            this.richTextBox2 = new System.Windows.Forms.RichTextBox();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             this.SuspendLayout();
@@ -75,28 +76,28 @@
             // 
             // PlayerHealth
             // 
-            this.PlayerHealth.Location = new System.Drawing.Point(416, 509);
+            this.PlayerHealth.Location = new System.Drawing.Point(412, 322);
             this.PlayerHealth.Name = "PlayerHealth";
             this.PlayerHealth.Size = new System.Drawing.Size(150, 36);
             this.PlayerHealth.TabIndex = 3;
-            this.PlayerHealth.Click += new System.EventHandler(this.PlayerHealth_Click);
             // 
             // textBox1
             // 
             this.textBox1.BackColor = System.Drawing.SystemColors.Menu;
             this.textBox1.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.textBox1.ForeColor = System.Drawing.SystemColors.MenuText;
-            this.textBox1.Location = new System.Drawing.Point(474, 490);
+            this.textBox1.Location = new System.Drawing.Point(435, 303);
             this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(37, 13);
+            this.textBox1.Size = new System.Drawing.Size(108, 13);
             this.textBox1.TabIndex = 7;
-            this.textBox1.Text = "Health";
+            this.textBox1.Text = "Current Players Health";
+           
             // 
             // richTextBox1
             // 
-            this.richTextBox1.Location = new System.Drawing.Point(412, 334);
+            this.richTextBox1.Location = new System.Drawing.Point(412, 137);
             this.richTextBox1.Name = "richTextBox1";
-            this.richTextBox1.Size = new System.Drawing.Size(154, 150);
+            this.richTextBox1.Size = new System.Drawing.Size(150, 150);
             this.richTextBox1.TabIndex = 8;
             this.richTextBox1.Text = "";
             // 
@@ -109,7 +110,6 @@
             this.pictureBox1.Size = new System.Drawing.Size(188, 165);
             this.pictureBox1.TabIndex = 9;
             this.pictureBox1.TabStop = false;
-            this.pictureBox1.Click += new System.EventHandler(this.pictureBox1_Click);
             // 
             // pictureBox2
             // 
@@ -140,11 +140,20 @@
             this.Loader.UseVisualStyleBackColor = true;
             this.Loader.Click += new System.EventHandler(this.button5_Click);
             // 
+            // richTextBox2
+            // 
+            this.richTextBox2.Location = new System.Drawing.Point(412, 395);
+            this.richTextBox2.Name = "richTextBox2";
+            this.richTextBox2.Size = new System.Drawing.Size(150, 150);
+            this.richTextBox2.TabIndex = 13;
+            this.richTextBox2.Text = "";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(970, 755);
+            this.Controls.Add(this.richTextBox2);
             this.Controls.Add(this.Loader);
             this.Controls.Add(this.Save);
             this.Controls.Add(this.richTextBox1);
@@ -158,7 +167,6 @@
             this.Name = "Form1";
             this.Text = "Form1";
             this.Load += new System.EventHandler(this.Form1_Load);
-            this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.Form1_MouseDown);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
             this.ResumeLayout(false);
@@ -178,6 +186,7 @@
         private System.Windows.Forms.PictureBox pictureBox2;
         private System.Windows.Forms.Button Save;
         private System.Windows.Forms.Button Loader;
+        private System.Windows.Forms.RichTextBox richTextBox2;
     }
 }
 

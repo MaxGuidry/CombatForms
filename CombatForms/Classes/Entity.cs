@@ -42,7 +42,7 @@ namespace CombatForms.Classes
         [XmlIgnore]
         public Handler onDeath;
         [XmlIgnore]
-        public FSM<EntityState> controller;
+        private FSM<EntityState> controller;
         public enum EntityState
         {
             INIT,
