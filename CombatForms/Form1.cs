@@ -56,9 +56,6 @@ namespace CombatForms
             Controls.Add(health);
             Controls.Add(info);
             Controls.Add(targetButton);
-
-
-
         }
         public void OnLoad()
         {
@@ -107,7 +104,7 @@ namespace CombatForms
                 info.Name = e.Name + "info";
                 health.Name = e.Name + "health";
                 targetButton.Name = e.Name + "targetButton";
-
+                info.ReadOnly = true;
                 health.Size = new System.Drawing.Size(100, 25);
 
                 targetButton.Size = new Size(150, 50);
@@ -166,31 +163,6 @@ namespace CombatForms
 
 
             Combat.Instance.SetTarget((sender as Control).Text); 
-
-
-
-            //if (typeof(Player).ToString() == Combat.Instance.CurrentEntity.ToString())
-            //{
-            //    foreach (Entity e in Combat.Instance.Entities)
-            //    {
-            //        if (e.Name == (sender as Control).Text && !(Combat.Instance.CurrentEntity.ToString() == e.ToString()))
-            //        {
-            //            Combat.Instance.Target = e;
-
-            //            return;
-            //        }
-            //    }
-            //}
-            //else if (typeof(Enemy).ToString() == Combat.Instance.CurrentEntity.ToString())
-            //{
-            //    Random r = new Random();
-            //    string target1 = Combat.Instance.Target.ToString();
-            //    string target2 = typeof(Player).ToString();
-            //    while (Combat.Instance.Target.ToString() != typeof(Player).ToString())
-            //    {
-            //        Combat.Instance.Target = Combat.Instance.Entities[r.Next(0, Combat.Instance.Entities.Count)];
-            //    }
-            //}
         }
         public void SetTarget(object o, EventArgs ea)
         {
@@ -212,7 +184,7 @@ namespace CombatForms
                 {
 
 
-                    Controls[e.Name + "info"].Location = new System.Drawing.Point(135, Controls[e.Name + "health"].Location.Y + Controls[e.Name + "health"].Size.Height);
+                    Controls[e.Name + "info"].Location = new System.Drawing.Point(105, Controls[e.Name + "health"].Location.Y + Controls[e.Name + "health"].Size.Height);
 
                     Controls[e.Name + "info"].Text = "Health: " + e.Health + "\nDamage: " + e.Damage +
                         "\nSpeed: " + e.Speed + "\nArmor: " + e.Armor + "\nLevel: " + e.Level;
@@ -297,7 +269,9 @@ namespace CombatForms
             }
             pictureBox1.SendToBack();
             pictureBox1.Location = new Point(Controls[Combat.Instance.CurrentEntity.Name + "targetButton"].Location.X + 150, Controls[Combat.Instance.CurrentEntity.Name + "targetButton"].Location.Y - 75);
-
+            pictureBox1.Visible = false;
+            pictureBox2.Visible = false;
+            numericUpDown1.Value = Combat.Instance.KillCount;
         }
         public void Setup()
         {
@@ -333,7 +307,7 @@ namespace CombatForms
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            UpdateCombatUI();
+            UpdateAllUI();
         }
         private void Attack_Click(object sender, EventArgs e)
         {
@@ -358,15 +332,35 @@ namespace CombatForms
         {
             Combat.Instance.currentIndex = DataSerializer<int>.Deserialize("Current Index");
             Combat.Instance.Entities = DataSerializer<List<Entity>>.Deserialize("All PLayers");
+            Combat.Instance.KillCount = DataSerializer<int>.Deserialize("Kill Count");
             CreateControls();
             OnLoad();
-
+            richTextBox2.Text = "Game Loaded.\n";
             UpdateAllUI();
         }
         private void Save_Click(object sender, EventArgs e)
         {
             DataSerializer<int>.Serialize("Current Index", Combat.Instance.Entities.IndexOf(Combat.Instance.CurrentEntity));
             DataSerializer<List<Entity>>.Serialize("All Players", Combat.Instance.Entities);
+            DataSerializer<int>.Serialize("Kill Count", Combat.Instance.KillCount);
+            richTextBox2.Text += "Game Saved.\n";
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("All Entities on the left side are on your team.\n\nAll Entities on the right side are on the opposing team" +
+                "\n\nTo attack an enemy: Click the button of the enemy you would like to attack\nPress the attack button\nThen end your turn\n\nWhen it is the enemies turn just end the turn and the enemy will act\n\n"+
+                "If you are low on health and want to defend just press the defend button then end your turn.\n\n"+
+                "The only way to heal is to level up.\n\n Good Luck.");
+        }
+
+        private void numericUpDown1_ValueChanged(object sender, EventArgs e)
+        {
+            numericUpDown1.Value = Combat.Instance.KillCount;
+        }
+
+        private void label1_Click(object sender, EventArgs e)
+        {
 
         }
     }

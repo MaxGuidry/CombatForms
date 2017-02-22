@@ -60,6 +60,7 @@ namespace CombatForms
         private void Health_Click(object sender, EventArgs e)
         {
             Combat.Instance.CurrentEntity.MaxHealth += Combat.Instance.CurrentEntity.MaxHealth * .20f;
+            Combat.Instance.CurrentEntity.Health = Combat.Instance.CurrentEntity.MaxHealth;
             this.Close();
             form1.Enabled = true;
             Combat.Instance.NextPlayer();

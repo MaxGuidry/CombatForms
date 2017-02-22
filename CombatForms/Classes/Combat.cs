@@ -23,6 +23,7 @@ namespace CombatForms.Classes
         private Combat()
         {
             Entities = new List<Entity>();
+            KillCount = 0;
             controller = new FSM<CombatState>();
             controller.AddTransition(CombatState.FIGHTING, CombatState.LEVELING);
             controller.AddTransition(CombatState.LEVELING, CombatState.FIGHTING);
@@ -46,7 +47,7 @@ namespace CombatForms.Classes
             {
                 CurrentEntity.TurnsTaken = 0;
                 CurrentEntity.TurnTaken = true;
-                while (CurrentEntity.TurnTaken == true && currentIndex < Entities.Count)
+                while (CurrentEntity.TurnTaken == true && currentIndex+1 < Entities.Count)
                     currentIndex++;
                 if (currentIndex+1 > Entities.Count - 1)
                 {
@@ -69,7 +70,7 @@ namespace CombatForms.Classes
                     currentIndex++;
                 return;
             }
-            e.onDeath += OnPlayerDeath;
+            //e.onDeath += OnPlayerDeath;
             Entities.Add(e);
 
             SortEntities();
@@ -142,7 +143,6 @@ namespace CombatForms.Classes
             if (controller.GetState().ToString() == "FIGHTING")
                 Combat.Instance.NextPlayer();
 
-
             Combat.Instance.Target = null;
 
         }
@@ -159,9 +159,10 @@ namespace CombatForms.Classes
             }
 
             GenerateNewEnemy(Target as Enemy);
-
+            KillCount++;
 
             SortEntities();
+
         }
         public void ChangeCombatState(string state)
         {
@@ -217,6 +218,7 @@ namespace CombatForms.Classes
         private FSM<CombatState> controller;
         public Entity Target;
         public List<Entity> Entities;
+        public int KillCount { get; set; }
         public Entity CurrentEntity
         {
             get
