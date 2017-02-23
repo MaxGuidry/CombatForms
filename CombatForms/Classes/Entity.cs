@@ -29,7 +29,7 @@ namespace CombatForms.Classes
             controller.AddTransition(EntityState.DEFEND, EntityState.WAIT);
             controller.Start(EntityState.WAIT);
             State s = controller.GetState();
-            m_Armor = 10f;
+            Armor = 10f;
 
         }
 
@@ -53,7 +53,7 @@ namespace CombatForms.Classes
         public State CurrentState
         {
             get { return controller.GetState(); }
-           
+
         }
 
         public virtual void TakeDamage(float Amount)
@@ -77,30 +77,25 @@ namespace CombatForms.Classes
             }
         }
 
-        //would just use the AutoProperties instead of making these backing fields for readability
-        protected float m_Health;
-        protected float m_MaxHealth;
-        protected int m_Level;
-        protected float m_Speed;
-        protected float m_Damage;
-        protected int m_NumberOfTurns;
-        protected int m_TurnsTaken;
-        protected string m_Name;
-        protected bool m_Alive;
-        protected float m_Armor;
 
-        public float Damage { get { return m_Damage; } set { m_Damage = value; } }
-        public float Health { get { return m_Health; } set { m_Health = value; } }
+    
 
-        public float Speed { get { return m_Speed; } set { m_Speed = value; } }
-        public int NumberOfTurns { get { return (int)(m_Speed/5f); } set { m_NumberOfTurns = value; } }
-        public int TurnsTaken { get { return m_TurnsTaken; } set { m_TurnsTaken = value; } }
-        public string Name { get { return m_Name; } set { m_Name = value; } }
+        public int NumberOfTurns { get { return (int)(Speed / 5f); } set { } }
 
-        public bool Alive { get { return m_Alive; } set { m_Alive = value; } }
-        public float MaxHealth { get { return m_MaxHealth; } set { m_MaxHealth = value; } }
-        public int Level { get { return m_Level; } set { m_Level = value; } }
-        public float Armor { get { return m_Armor; } set { m_Armor = value; } }
+
+        public float Damage { get; set; }
+        public float Health { get; set; }
+
+        public float Speed { get; set; }
+
+        public int TurnsTaken { get; set; }
+        public string Name { get; set; }
+
+        public bool Alive { get; set; }
+        public float MaxHealth { get; set; }
+        public int Level { get; set; }
+        public float Armor { get; set; }
+
         public bool TurnTaken { get; set; }
     }
 }

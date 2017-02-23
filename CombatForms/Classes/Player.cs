@@ -21,9 +21,9 @@ namespace CombatForms.Classes
             new Entity();
             
             m_ExpToNextLevel = 100f;
-            m_Alive = true;
+            Alive = true;
            
-            m_Level = 1;
+            Level = 1;
             m_Type = EntityType.PLAYER;
 
         }
@@ -32,13 +32,13 @@ namespace CombatForms.Classes
         {
 
             m_ExpToNextLevel = 100f;
-            m_Name = name;
-            m_Alive = true;
-            m_Level = level;
-            m_Health = health;
-            m_MaxHealth = health;
-            m_Damage = baseDamage;
-            m_Speed = speed;
+            Name = name;
+            Alive = true;
+            Level = level;
+            Health = health;
+            MaxHealth = health;
+            Damage = baseDamage;
+            Speed = speed;
             m_Type = EntityType.PLAYER;
 
         }
@@ -53,17 +53,17 @@ namespace CombatForms.Classes
         public override void TakeDamage(float Amount)
         {
             if (CurrentState.ToString() == "DEFEND")
-                Amount -= m_Armor;
-            if (m_Health - Amount < 0)
+                Amount -= Armor;
+            if (Health - Amount < 0)
             {
-                m_Health = 0;
+                Health = 0;
 
                 this.DeathUpdate();
                 this.onDeath.Invoke();
                 
                 return;
             }
-            m_Health -= Amount;
+            Health -= Amount;
             
         }
         [XmlIgnore]
@@ -72,40 +72,31 @@ namespace CombatForms.Classes
         public System.Action DeathUpdate;
         private void LevelUp()
         {
-            m_Level++;
-            m_ExpToNextLevel = (5f * (float)Math.Pow((double)m_Level, 2d)) + 95f;
+            Level++;
+            m_ExpToNextLevel = (5f * (float)Math.Pow((double)Level, 2d)) + 95f;
             StatBuff t = new StatBuff();
             t.Visible = true;
             t.Activate();
             OnLevelUp.Invoke();
-            m_Health = m_MaxHealth;
+            Health =MaxHealth;
         }
           
         public void GainEXP(IDamagable target)
         {
-            m_Exp += (float)(8f * (float)(Math.Pow((double)(target as Enemy).Level, 1.5d)) + 50f);
-            if (m_Exp > m_ExpToNextLevel)
+            EXP += (float)(8f * (float)(Math.Pow((double)(target as Enemy).Level, 1.5d)) + 50f);
+            if (EXP > m_ExpToNextLevel)
             {
-                m_Exp -= m_ExpToNextLevel;
+                EXP -= m_ExpToNextLevel;
                 LevelUp();
 
             }
         }
-       
-
-
-
-        //FIELDS AND PROPERTIES
-        #region FIELDS AND PROPERTIES
-
-
-        private float m_Exp;
+        
         private float m_ExpToNextLevel;
-        public float EXP { get { return m_Exp; } set { m_Exp = value; } }
+        public float EXP { get;  set ;  }
        
        
 
 
-        #endregion
     }
 }

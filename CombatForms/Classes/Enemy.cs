@@ -16,48 +16,48 @@ namespace CombatForms.Classes
 
 
             new Entity();
-            m_Alive = true;
-            m_Level = 1;
-            m_Damage = 20f;
-            m_Health = 50f;
-            m_MaxHealth = m_Health;
-            m_Speed = 7f;
+            Alive = true;
+            Level = 1;
+            Damage = 20f;
+            Health = 50f;
+            MaxHealth = Health;
+            Speed = 7f;
             m_Type = EntityType.ENEMY;
         }
 
-        public Enemy(string name,float health, int level, float baseDamage, float speed)
+        public Enemy(string name, float health, int level, float baseDamage, float speed)
         {
-            m_Damage = baseDamage;
+            Damage = baseDamage;
 
-            m_Alive = true;
-            m_Level = level;
-            m_Health = health;
-            m_MaxHealth = health;
-            m_Name = name;
-            m_Speed = speed;
+            Alive = true;
+            Level = level;
+            Health = health;
+            MaxHealth = health;
+           Name = name;
+            Speed = speed;
             m_Type = EntityType.ENEMY;
         }
         public override void DealDamage(IDamagable target, float Amount)
         {
             target.TakeDamage(Amount);
-            
+
         }
 
         public override void TakeDamage(float Amount)
         {
             if (CurrentState.ToString() == "DEFEND")
-                Amount -= m_Armor;
-            if (m_Health - Amount <= 0)
+                Amount -= Armor;
+            if (Health - Amount <= 0)
             {
-                m_Health = 0;
-                m_Alive = false;
-                
-                
+                Health = 0;
+                Alive = false;
+
+
                 this.onDeath.Invoke();
                 return;
             }
-            m_Health -= Amount;
-           
+            Health -= Amount;
+
         }
 
         public void ChooseAction()
@@ -69,7 +69,7 @@ namespace CombatForms.Classes
             else if (chance == 4)
                 Combat.Instance.CurrentEntity.ChangePlayerState("DEFEND");
         }
-      
+
     }
 
 

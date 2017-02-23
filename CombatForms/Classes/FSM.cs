@@ -178,8 +178,6 @@ namespace CombatForms.Classes
 
         }
 
-      
-
        
         private Dictionary<string, List<State>> transitions;
      

@@ -16,7 +16,7 @@ namespace CombatForms.Classes
             onEnd = null;
             onStart = null;
             onUpdate = null;
-            m_Name = e.ToString();
+            Name = e.ToString();
         }
         public void AddEnterFunction(Delegate os)
         {
@@ -47,7 +47,7 @@ namespace CombatForms.Classes
         }
         public override string ToString()
         {
-            return m_Name;
+            return Name;
         }
         [System.Xml.Serialization.XmlIgnore]
         public Action onUpdate;
@@ -57,8 +57,7 @@ namespace CombatForms.Classes
         public Action onStart;
         [System.Xml.Serialization.XmlIgnore]
         public Action onEnd;
-        private string m_Name;
-        public string Name { get { return m_Name; } }
+        public string Name { get; private set;  }
     }
     
 }
