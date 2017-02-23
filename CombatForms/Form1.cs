@@ -279,7 +279,7 @@ namespace CombatForms
             {
                 this.Controls.Add(c);
             }
-            Combat.Instance.Start();
+        
 
             Combat.Instance.OnEnemyGeneration += GenerateNewEnemyControl;
             Combat.Instance.getTarget += GetTarget;

@@ -24,6 +24,7 @@ namespace CombatForms.Classes
         {
             Entities = new List<Entity>();
             KillCount = 0;
+            currentIndex = 0;
             controller = new FSM<CombatState>();
             controller.AddTransition(CombatState.FIGHTING, CombatState.LEVELING);
             controller.AddTransition(CombatState.LEVELING, CombatState.FIGHTING);
@@ -175,12 +176,7 @@ namespace CombatForms.Classes
                 }
             }
         }
-        public void Start()
-        {
-            currentIndex = 0;
-
-
-        }
+       
 
         public void SortEntities()
         {

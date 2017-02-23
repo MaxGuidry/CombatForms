@@ -42,7 +42,7 @@ namespace CombatForms
             fsm.ChangeState(GameState.running);
             
             Combat.Instance.SortEntities();
-            Combat.Instance.Start();
+           
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new Form1());
