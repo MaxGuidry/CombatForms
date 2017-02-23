@@ -79,9 +79,6 @@ namespace CombatForms.Classes
             }
         }
 
-
-    
-
         public int NumberOfTurns { get { return (int)(Speed / 5f); } set { } }
 
 
