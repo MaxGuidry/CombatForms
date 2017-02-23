@@ -22,7 +22,7 @@ namespace CombatForms.Classes
             Health = 50f;
             MaxHealth = Health;
             Speed = 7f;
-            m_Type = EntityType.ENEMY;
+            Type = EntityType.ENEMY;
         }
 
         public Enemy(string name, float health, int level, float baseDamage, float speed)
@@ -35,7 +35,7 @@ namespace CombatForms.Classes
             MaxHealth = health;
            Name = name;
             Speed = speed;
-            m_Type = EntityType.ENEMY;
+            Type = EntityType.ENEMY;
         }
         public override void DealDamage(IDamagable target, float Amount)
         {

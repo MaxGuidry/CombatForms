@@ -24,7 +24,7 @@ namespace CombatForms.Classes
             Alive = true;
            
             Level = 1;
-            m_Type = EntityType.PLAYER;
+            Type = EntityType.PLAYER;
 
         }
 
@@ -39,7 +39,7 @@ namespace CombatForms.Classes
             MaxHealth = health;
             Damage = baseDamage;
             Speed = speed;
-            m_Type = EntityType.PLAYER;
+            Type = EntityType.PLAYER;
 
         }
         public override void DealDamage(IDamagable target, float Amount)

@@ -33,10 +33,11 @@ namespace CombatForms.Classes
 
         }
 
-        protected EntityType m_Type;
+        
         public EntityType Type
         {
-            get { return m_Type; }
+            get;
+            protected set;
         }
         public delegate void Handler();
         [XmlIgnore]
@@ -49,6 +50,7 @@ namespace CombatForms.Classes
             WAIT,
             ATTACK,
             DEFEND,
+            DEAD,
         }
         public State CurrentState
         {

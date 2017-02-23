@@ -48,7 +48,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Classes\Combat.cs" />
-    <Compile Include="Classes\DataManager.cs" />
+    <Compile Include="Classes\DataSerializer.cs" />
     <Compile Include="Classes\Enemy.cs" />
     <Compile Include="Classes\Entity.cs" />
     <Compile Include="Classes\FSM.cs" />
