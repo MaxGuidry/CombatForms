@@ -160,7 +160,7 @@ namespace CombatForms.Classes
 
             GenerateNewEnemy(Target as Enemy);
             KillCount++;
-
+            
             SortEntities();
 
         }
