@@ -33,7 +33,7 @@ namespace CombatForms.Classes
 
         }
 
-        
+        [XmlIgnore]
         public EntityType Type
         {
             get;
